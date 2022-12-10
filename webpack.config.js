@@ -88,7 +88,12 @@ module.exports = {
       {
         test: /\.(js|jsx)$/, //kind of file extension this rule should look for and apply in test
         exclude: /node_modules/, //folder to be excluded
-        use: 'babel-loader', //loader which we are going to use
+        use: {
+          loader: 'babel-loader', //loader which we are going to use
+          options: {
+            presets: ['@babel/preset-react', '@babel/preset-env'],
+          },
+        },
       },
       {
         test: /.(css|scss)$/,
@@ -99,7 +104,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: './src/client/index.html',
     }),
   ],
   resolve: {
