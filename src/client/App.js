@@ -1,8 +1,14 @@
 import React from 'react'
+import Login from './components/login'
+import CreateUser from './components/CreateUser'
+import './stylesheets/styles.scss'
 
 const App = () => {
   return (
-    <h1>Welcome to React App thats build using Webpack and Babel separately</h1>
+    <div className="app-page">
+      {/* <Login /> */}
+      <CreateUser />
+    </div>
   )
 }
 
