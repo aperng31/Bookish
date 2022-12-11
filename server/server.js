@@ -6,8 +6,8 @@ const PORT = 8080;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const entryController = require('./controllers/[PLACEHOLDER]');
-const bookController = require('./controllers/[PLACEHOLDER]');
+const entryController = require('./server/controllers/[PLACEHOLDER]');
+const bookController = require('./server/controllers/[PLACEHOLDER]');
 
 //handling static files from public I hope...
 app.use(express.static(path.resolve(__dirname, '../public')));
@@ -15,36 +15,54 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 //Do we want to use routers or no?
 
 //USERS
-app.get('/entries', entryController.findUser, (req, res) => {
-  console.log('this is all entries');
-  res.status(200).send(res.locals.something);
-});
+app.get(
+  '/entries',
+  entryController.findUser,
+  bookController.getUserBooks,
+  (req, res) => {
+    console.log('this user entries');
+    res.status(200).send(res.locals.userBooks);
+  }
+);
 
 app.post('/entries', entryController.createUser, (req, res) => {
   console.log('this is createEntries');
+  //maybe just send them somewhere instead
   res.status(200).send(res.locals.allEntries);
 });
 
 //BOOKS
-app.get('/books', bookController.getUserBooks, (req, res) => {
-  console.log('this is get UserBooks');
-  res.status(200).send(res.locals.allEntries);
-});
+//we don't need router for this because we only ever get book on login or creating new entry
+// app.get('/books', bookController.getUserBooks, (req, res) => {
+//   console.log('this is get UserBooks');
+//   res.status(200).send(res.locals.userBooks);
+// });
 
-app.post('/books', bookController.createBook, (req, res) => {
-  console.log('this is createEntries');
-  res.status(200).send(res.locals.allEntries);
-});
+//this should try to find a book, if not found: create an entry, and return the user's list of books
+//if found, skip to create catalog
+app.post(
+  '/books',
+  bookController.findBook,
+  bookController.findGenre,
+  bookController.createBook,
+  bookController.createCatalogEntry,
+  bookController.getUserBooks,
+  (req, res) => {
+    console.log('this is createEntries');
+    res.status(202).send(res.locals.allEntries);
+  }
+);
 
-app.delete('/books', bookController.deleteBook, (req, res) => {
-  console.log('this is createEntries');
-  res.status(200).send(res.locals.allEntries);
-});
+//NEED TO WORK ON THESE SOON
+// app.delete('/books', bookController.deleteBook, (req, res) => {
+//   console.log('this is createEntries');
+//   res.status(200).send(res.locals.allEntries);
+// });
 
-app.patch('/books', bookController.editBook, (req, res) => {
-  console.log('this is createEntries');
-  res.status(200).send(res.locals.allEntries);
-});
+// app.patch('/books', bookController.editBook, (req, res) => {
+//   console.log('this is createEntries');
+//   res.status(200).send(res.locals.allEntries);
+// });
 
 app.use((err, req, res, next) => {
   const defaultErr = {
