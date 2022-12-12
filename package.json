@@ -4,7 +4,7 @@
   "description": "First group scratch project by Tasseled Wobbegang",
   "main": "index.js",
   "scripts": {
-    "frontend": "NODE_ENV=development webpack-dev-server --open --hot --progress --color",
+    "frontend": "NODE_ENV=development webpack-dev-server --open",
     "start": "NODE_ENV=production node server/server.js",
     "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.js\"",
     "build": "NODE_ENV=production webpack .",
@@ -48,8 +48,10 @@
     "express": "^4.18.2",
     "html-webpack-plugin": "^5.5.0",
     "nodemon": "^2.0.20",
+    "pg": "^8.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1",
     "react-redux": "^8.0.5",
     "react-router": "^6.4.5",
     "react-router-dom": "^6.4.5"

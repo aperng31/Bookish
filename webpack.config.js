@@ -68,8 +68,9 @@ module.exports = {
      * to localhost:3000/api/* (where our Express server is running)
      */
     proxy: {
-      '/api/**': {
-        target: 'http://localhost:3000/',
+      '/': {
+        target: 'http://localhost:8080/',
+        router: () => 'http://localhost:3000',
         secure: false,
       },
       // '/assets/**': {
@@ -100,6 +101,10 @@ module.exports = {
         test: /.(css|scss)$/,
         exclude: /node_modules/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
       },
     ],
   },

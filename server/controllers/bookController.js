@@ -3,7 +3,7 @@ const db = require('../models/scratch_model.js');
 
 const bookController = {};
 
-bookController.getAllBooks = (req, req, next) => {
+bookController.getAllBooks = (req, res, next) => {
   const mySQL = 'SELECT b._id AS ID, b_name as Title/name from books';
   db.query(mySQL).then((data) => {
     res.locals.allBooks = data.rows;
@@ -16,7 +16,8 @@ bookController.getAllBooks = (req, req, next) => {
 bookController.getUserBooks = (req, res, next) => {
   // write code here
   //Should have this for either when someone logs in or when someone enters a new entry
-  const id = Object.values(res.locals.user);
+  console.log('we are in getUserBooks')
+  const id = [res.locals.user._id];
 
   //this should get all the entries of books where c.book_id = b._ID and u._id = c.user_ID when u._id = entry
   const mySQL =
@@ -29,6 +30,8 @@ bookController.getUserBooks = (req, res, next) => {
   // const diffSQL = 'SELECT p.name AS Character, s.name FROM public.people p LEFT OUTER JOIN public.species s ON p.species_id = s._id';
   db.query(mySQL2, id)
     .then((data) => {
+      console.log("query successful, here is data: ", data.rows)
+
       res.locals.userBooks = data.rows;
       return next();
     })
@@ -169,4 +172,4 @@ bookController.editBook = (req, res, next) => {
   });
 };
 
-bookController.module.exports = bookController;
+module.exports = bookController;
