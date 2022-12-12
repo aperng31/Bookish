@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   //some sort of 'user logged in' state
-  
   logInModal: true,
   value: 0,
 }

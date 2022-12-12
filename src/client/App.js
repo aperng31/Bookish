@@ -1,8 +1,14 @@
 import React from 'react'
+import BookContainer from './components/BookContainer.jsx'
+import Header from './components/Header.jsx'
 
 const App = () => {
   return (
-    <h1>Welcome to React App thats build using Webpack and Babel separately</h1>
+    <div>
+      <Header />
+      <BookContainer />      
+    </div>
+
   )
 }
 
