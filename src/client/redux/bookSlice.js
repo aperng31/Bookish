@@ -5,7 +5,7 @@ const temp = [{title: 'the battle of orange', author: 'helloworld'},
 const initialState = {
   //some sort of 'user logged in' state
   bookModal: false, //show modal when requested
-  bookData: temp, // []
+  bookData: [], // []
 }
 
 export const bookSlice = createSlice({
