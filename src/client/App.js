@@ -6,6 +6,9 @@ import Login from './components/Login'
 import CreateUser from './components/CreateUser'
 import './stylesheets/styles.scss'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { setBooks } from './redux/bookSlice'
+
 //defining string keywords to determine the state of our app
 export const CURRENT_SCREEN_MAP = {
   login: 'login',
@@ -16,6 +19,13 @@ export const CURRENT_SCREEN_MAP = {
 const App = () => {
   //setting the current state to be login
   const [currentScreen, setCurrentScreen] = useState(CURRENT_SCREEN_MAP.login)
+
+  const dispatch = useDispatch();
+  // const setBooks = () => {dispatch(setBooks())};
+  const initState = useSelector(state => state.book.bookData);
+  console.log('app')
+  // console.log(bookData);
+ 
 
   return (
     // <div>
@@ -30,7 +40,7 @@ const App = () => {
       )}
       {/* if the current screen state is login, we render the login component*/}
       {currentScreen === CURRENT_SCREEN_MAP.login && (
-        <Login setCurrentScreen={setCurrentScreen} />
+        <Login setCurrentScreen={setCurrentScreen} setBooks={() => dispatch(setBooks())}/>
       )}
       {/* if the current screen state in dashboard, we render the dashboard component */}
       {currentScreen === CURRENT_SCREEN_MAP.bookContainer && (

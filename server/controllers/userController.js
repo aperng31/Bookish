@@ -72,25 +72,26 @@ userController.createUser = (req, res, next) => {
       }
       console.log(hash);
       user[2] = hash;
+      console.log(user)
+      const mySQL =
+        'INSERT INTO users (name, username, password) VALUES ($1, $2, $3)';
+    
+      db.query(mySQL, user)
+        .then((data) => {
+          res.locals.user = data.rows[0];
+          return next();
+        })
+        .catch((err) => {
+          return next({
+            log: `Error in userController.createUser: ${err}`,
+            status: 400,
+            message: {
+              err: 'An error occurred. Check server logs for more details',
+            },
+          });
+        });
     });
   });
-  const mySQL =
-    'INSERT INTO users (name, username, password) OUTPUT Inserted._id VALUES ($1, $2, $3)';
-
-  db.query(mySQL, user)
-    .then((data) => {
-      res.locals.user = data.rows[0];
-      return next();
-    })
-    .catch((err) => {
-      return next({
-        log: `Error in starwarsController.getCharacters: ${err}`,
-        status: 400,
-        message: {
-          err: 'An error occurred. Check server logs for more details',
-        },
-      });
-    });
 };
 
 module.exports = userController;
