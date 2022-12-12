@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import Modal from './Modal'
+import { CURRENT_SCREEN_MAP } from '../App'
+
 const CreateUser = (props) => {
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
@@ -39,7 +41,14 @@ const CreateUser = (props) => {
           />
         </label>
         <button>Submit & Create Account</button>
-        {/* <button className="create-user">Sign Up</button> */}
+        <div className="divider" />
+        <button
+          onClick={() => {
+            props.setCurrentScreen(CURRENT_SCREEN_MAP.login)
+          }}
+        >
+          Click here to go back to Login
+        </button>
       </div>
     </Modal>
   )
