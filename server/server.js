@@ -33,6 +33,7 @@ app.post(
 app.post(
   '/signup',
   userController.createUser,
+  userController.getUser,
   bookController.getUserBooks,
   (req, res) => {
     console.log('this is createEntries');
@@ -58,6 +59,7 @@ app.post(
   bookController.findBook,
   bookController.findGenre,
   bookController.createBook,
+  bookController.findBook,
   bookController.createCatalogEntry,
   bookController.getUserBooks,
   (req, res) => {

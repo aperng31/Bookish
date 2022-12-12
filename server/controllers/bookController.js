@@ -12,7 +12,7 @@ bookController.getAllBooks = (req, res, next) => {
 };
 
 //query to get a list of the users books
-//output:[{_id, name, author, genre_id, genre}...]
+//output:[{_id, name, author, genre_id, genre_name}...]
 bookController.getUserBooks = (req, res, next) => {
   // write code here
   //Should have this for either when someone logs in or when someone enters a new entry
@@ -32,7 +32,7 @@ bookController.getUserBooks = (req, res, next) => {
     .then((data) => {
       console.log('query successful, here is data: ', data.rows);
 
-      res.locals.userBooks = data.rows;
+      res.locals.userBooks = data.rows ? data.rows : [];
       return next();
     })
     //this will be front end work if there is nothing found, just have an empty array
@@ -48,21 +48,35 @@ bookController.getUserBooks = (req, res, next) => {
 };
 
 bookController.findBook = (req, res, next) => {
-  const { title, author, genre_string, user_id } = req.body;
-  res.locals.initialEntry = [title, author, genre_string, user_id];
+  if (!res.locals.initialEntry) {
+    const { title, author, genre_string, user_id } = req.body;
+    console.log(req.body);
+    res.locals.initialEntry = [title, author, genre_string, user_id];
+  }
   //[title/name, author, genre(STRING), user_id]
+
   const id = [res.locals.initialEntry[0], res.locals.initialEntry[1]];
   //should I make it case insensitive?
-  const mySQL = 'SELECT b.* FROM books b WHERE b._name = $1 AND b._author = $2';
+  console.log('we are in findBook before query: ', id);
+  const mySQL = 'SELECT b.* FROM books b WHERE b.name = $1 AND b.author = $2';
 
   db.query(mySQL, id)
     .then((data) => {
-      res.locals.foundBook = true;
-      res.locals.bookEntryID = data.rows[0];
+      console.log('successfully found');
+      if (data.rows[0]) {
+        res.locals.foundBook = true;
+        res.locals.bookEntryID = data.rows[0];
+      }
       return next();
     })
     .catch((err) => {
-      return next();
+      return next({
+        log: `Error in findBooks: ${err}`,
+        status: 400,
+        message: {
+          err: 'An error occurred. Check server logs for more details',
+        },
+      });
     });
 };
 
@@ -72,6 +86,7 @@ bookController.findGenre = (req, res, next) => {
   //I'm expecting userID to be in the reqBody for catalog purposes.
   //[title/name, author, genre(STRING), user_id]
   if (res.locals.foundBook) {
+    console.log('did we skip?');
     return next();
   }
   //the second value is for editting books...
@@ -84,11 +99,12 @@ bookController.findGenre = (req, res, next) => {
   const id =
     res.locals.initialEntry.length == 5
       ? [res.locals.initialEntry[3]]
-      : [res.locals.initalEntry[2]];
+      : [res.locals.initialEntry[2]];
   const mySQL = 'SELECT g._id FROM genre g WHERE g.genre = $1';
   db.query(mySQL, id)
     .then((data) => {
       res.locals.genre = data.rows[0];
+      console.log('we are in findBooks');
       return next();
     })
     .catch((err) => {
@@ -116,13 +132,12 @@ bookController.createBook = (req, res, next) => {
 
   //should be 1, 2, 3 as that should be title/name, genre, and genre_id
   //Should output book ID
-  const mySQL =
-    'INSERT INTO books (name, author, genre) OUTPUT Inserted._id VALUES ($1, $2, $5)';
-
+  const mySQL = 'INSERT INTO books (name, author, genre) VALUES ($1, $2, $3)';
+  console.log('in create book this is id: ', id);
   db.query(mySQL, id)
     .then((data) => {
       //I believe insert returns an item?
-      res.locals.bookEntryID = data.rows[0];
+      console.log(data.rows[0]);
       return next();
     })
     .catch((err) => {
@@ -143,13 +158,18 @@ bookController.createCatalogEntry = (req, res, next) => {
   const id =
     res.locals.initialEntry.length == 5
       ? [res.locals.initialEntry[4], res.locals.bookEntryID._id]
-      : [res.locals.initalEntry[3], res.locals.bookEntryID._id];
+      : [res.locals.initialEntry[3], res.locals.bookEntryID._id];
+  console.log(
+    'before query in createCatalog: ',
+    res.locals.initialEntry,
+    res.locals.bookEntryID._id
+  );
   //[ title/name, author, genre, user_id, book_id]
-  const mySQL =
-    'INSERT INTO catalog c (user_id, book_id) OUTPUT Inserted.user_id VALUES ($1, $2)';
+  const mySQL = 'INSERT INTO catalog (user_id, book_id) VALUES ($1, $2)';
   db.query(mySQL, id)
     .then((data) => {
-      res.locals.user = data.rows[0];
+      res.locals.user = {};
+      res.locals.user._id = res.locals.initialEntry[3];
       return next();
     })
     .catch((err) => {
