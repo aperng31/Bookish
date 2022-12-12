@@ -25,6 +25,8 @@ const Login = (props) => {
       const data = await response.json()
       if (data) {
         console.log(data);
+        console.log('in login')
+        props.setBooks();
         //use redux dispatch to update redux store 'bookDate'
         //also set 'user state' in redux store to current user_id
         props.setCurrentScreen(CURRENT_SCREEN_MAP.bookContainer)
