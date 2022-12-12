@@ -15,24 +15,28 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 //Do we want to use routers or no?
 
 //USERS
-app.get(
-  '/entries',
+app.post(
+  '/login',
   userController.findUser,
   bookController.getUserBooks,
   (req, res) => {
     console.log('this user entries');
-    res.status(200).send(res.locals.userBooks);
+    res
+      .status(200)
+      .send({ userBooks: res.locals.userBooks, user: res.locals.user });
   }
 );
 
 app.post(
-  '/entries',
+  '/signup',
   userController.createUser,
   bookController.getUserBooks,
   (req, res) => {
     console.log('this is createEntries');
     //maybe just send them somewhere instead
-    res.status(200).send(res.locals.userBooks);
+    res
+      .status(200)
+      .send({ userBooks: res.locals.userBooks, user: res.locals.user });
   }
 );
 

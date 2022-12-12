@@ -65,7 +65,7 @@ bookController.findBook = (req, res, next) => {
 //output: res.local.genre_id = {_id}
 bookController.findGenre = (req, res, next) => {
   //I'm expecting userID to be in the reqBody for catalog purposes.
-  //[title, author, genre_id, genre, user_id]
+  //[title, author, genre_id, genre, uesr_id]
   if (res.locals.foundBook) {
     return next();
   }
