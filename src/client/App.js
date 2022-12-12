@@ -19,9 +19,7 @@ export const CURRENT_SCREEN_MAP = {
 const App = () => {
   //setting the current state to be login
   // const [currentScreen, setCurrentScreen] = useState(CURRENT_SCREEN_MAP.login)
-  const [currentScreen, setCurrentScreen] = useState(
-    CURRENT_SCREEN_MAP.bookContainer,
-  )
+  const [currentScreen, setCurrentScreen] = useState(CURRENT_SCREEN_MAP.login)
 
   const dispatch = useDispatch()
   // const setBooks = () => {dispatch(setBooks())};
