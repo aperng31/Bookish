@@ -60,6 +60,8 @@ const Login = (props) => {
         <div className="divider" />
         <button
           className="create-user"
+          // button is disabled unless user has entered all the required fields
+          disabled={!username && !password}
           onClick={() => {
             props.setCurrentScreen(CURRENT_SCREEN_MAP.createUser)
           }}

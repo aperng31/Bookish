@@ -62,7 +62,13 @@ const CreateUser = (props) => {
             type="password"
           />
         </label>
-        <button onClick={createUserRequest}>Submit & Create Account</button>
+        <button
+          // button is disabled unless user has entered all three required fields
+          disabled={!name && !username && !password}
+          onClick={createUserRequest}
+        >
+          Submit & Create Account
+        </button>
         <div className="divider" />
         <button
           onClick={() => {
