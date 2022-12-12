@@ -11,6 +11,27 @@ const Login = (props) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
+  const loginRequest = async () => {
+    const requestBody = {
+      username,
+      password,
+    }
+    try {
+      const response = await fetch('WHATEVERENDPOINT', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestBody),
+      })
+      const data = await response.json()
+      if (data) {
+        props.setCurrentScreen(CURRENT_SCREEN_MAP.dashboard)
+      }
+    } catch (err) {
+      console.log(err)
+      window.alert(err)
+    }
+  }
+
   console.log(props)
   return (
     <Modal>
@@ -35,7 +56,7 @@ const Login = (props) => {
             type="password"
           />
         </label>
-        <button>Log In</button>
+        <button onClick={loginRequest}>Log In</button>
         <div className="divider" />
         <button
           className="create-user"

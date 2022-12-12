@@ -7,6 +7,28 @@ const CreateUser = (props) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
+  // const createUserRequest = async () => {
+  //   const requestBody = {
+  //     name,
+  //     username,
+  //     password,
+  //   }
+  //   try {
+  //     const response = await fetch('WHATEVERENDPOINT', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(requestBody),
+  //     })
+  //     const data = await response.json()
+  //     if (data) {
+  //       props.setCurrentScreen(CURRENT_SCREEN_MAP.login)
+  //     }
+  //   } catch (err) {
+  //     console.log(err)
+  //     window.alert(err)
+  //   }
+  // }
+
   return (
     <Modal>
       <div className="login">
@@ -40,7 +62,7 @@ const CreateUser = (props) => {
             type="password"
           />
         </label>
-        <button>Submit & Create Account</button>
+        <button onClick={createUserRequest}>Submit & Create Account</button>
         <div className="divider" />
         <button
           onClick={() => {
