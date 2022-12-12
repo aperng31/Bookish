@@ -2,31 +2,23 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   //some sort of 'user logged in' state
-
-  logInModal: true,
-  value: 0,
+  user_id: undefined,
 }
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const userSlice = createSlice({
+  name: 'user',
   initialState,
   reducers: {
-    newUser: (state) => {
+    setUser: (state, action) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      state.value += 1 //'modify' state to add
+      state.user_id = action.payload //'modify' state to add
     },
-    deleteUser: (state) => {
-      state.value -= 1
-    },
-    // incrementByAmount: (state, action) => {
-    //   state.value += action.payload
-    // },
   },
 })
 
-export const { newUser, deleteUser } = counterSlice.actions
+export const { setUser } = userSlice.actions
 
-export default counterSlice.reducer
+export default userSlice.reducer

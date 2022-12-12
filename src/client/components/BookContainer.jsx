@@ -23,10 +23,12 @@ function BookContainer() {
   const dispatch = useDispatch();
 
   const bookData = useSelector(state => state.book.bookData);
+  const user_id = useSelector(state => state.user.user_id);
+
   const bookArray = [];
 
   for(let i = 0; i < bookData.length; i++) {
-    const newBook = <BookCard bookData={ bookData[i] } />
+    const newBook = <BookCard bookData={ bookData[i] } user_id={ user_id } />
     bookArray.push(newBook);
   }
 
@@ -34,7 +36,7 @@ function BookContainer() {
     <div id='book-container'>
       <Header />
       <CreateBookButton toggleCreateModal={ openModal }/>
-      <CreateBookModal createBookModal={ createBookModal } closeModal={ closeModal }/>
+      <CreateBookModal createBookModal={ createBookModal } closeModal={ closeModal } user_id={ user_id }/>
       {bookArray}
     </div>
   )

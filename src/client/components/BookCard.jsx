@@ -31,7 +31,8 @@ function BookCard(props) {
     const body = { author: newUpdatedAuthor, 
       title: newUpdatedTitle, 
       genre_string: newUpdatedGenre, 
-      book_id: props.bookData.book_id 
+      book_id: props.bookData.book_id,
+      user_id: props.user_id
     }
     const options = { method: 'PATCH', headers: { 'Content-Type': 'Application/JSON' }, body: JSON.stringify(body) };
     console.log(body);
@@ -43,7 +44,7 @@ function BookCard(props) {
   }
 
   function deleteBook() {
-    const body = { user_id: 1, book_id: props.bookData.book_id }; // user_id props.bookData.book_id
+    const body = { user_id: props.user_id, book_id: props.bookData.book_id }; // user_id props.bookData.book_id
     const options = { method: 'DELETE', headers: { 'Content-Type': 'Application/JSON' }, body: JSON.stringify(body) };
     console.log(body);
     fetch('/books', options)

@@ -25,7 +25,7 @@ function CreateBookModal(props) {
   const [genre, newGenre] = React.useState('');
 
   function createBookReq() {
-    const body = { author, title, genre };
+    const body = { author, title, genre, user_id: props.user_id };
     const options = { method: 'POST', headers: { 'Content-Type': 'Application/JSON' }, body: JSON.stringify(body) };
     fetch('/addbook', options)
     .then(res => {

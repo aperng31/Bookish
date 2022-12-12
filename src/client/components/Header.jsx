@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { getBooks, createBook, updateBook, deleteBook } from '../redux/counterSlice'
+import { getBooks, createBook, updateBook, deleteBook } from '../redux/userSlice'
 import BookCard from './BookCard.jsx'
 import '../styles/books.scss'
 
