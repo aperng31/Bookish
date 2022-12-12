@@ -32,7 +32,7 @@ const Login = (props) => {
     }
   }
 
-  console.log(props)
+  // console.log(props)
   return (
     <Modal>
       <div className="login">
@@ -56,12 +56,13 @@ const Login = (props) => {
             type="password"
           />
         </label>
-        <button onClick={loginRequest}>Log In</button>
+        <button disabled={!username || !password} onClick={loginRequest}>
+          Log In
+        </button>
         <div className="divider" />
         <button
           className="create-user"
           // button is disabled unless user has entered all the required fields
-          disabled={!username && !password}
           onClick={() => {
             props.setCurrentScreen(CURRENT_SCREEN_MAP.createUser)
           }}

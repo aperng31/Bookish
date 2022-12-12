@@ -7,27 +7,27 @@ const CreateUser = (props) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  // const createUserRequest = async () => {
-  //   const requestBody = {
-  //     name,
-  //     username,
-  //     password,
-  //   }
-  //   try {
-  //     const response = await fetch('WHATEVERENDPOINT', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(requestBody),
-  //     })
-  //     const data = await response.json()
-  //     if (data) {
-  //       props.setCurrentScreen(CURRENT_SCREEN_MAP.login)
-  //     }
-  //   } catch (err) {
-  //     console.log(err)
-  //     window.alert(err)
-  //   }
-  // }
+  const createUserRequest = async () => {
+    const requestBody = {
+      name,
+      username,
+      password,
+    }
+    try {
+      const response = await fetch('WHATEVERENDPOINT', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestBody),
+      })
+      const data = await response.json()
+      if (data) {
+        props.setCurrentScreen(CURRENT_SCREEN_MAP.login)
+      }
+    } catch (err) {
+      console.log(err)
+      window.alert(err)
+    }
+  }
 
   return (
     <Modal>
@@ -64,7 +64,7 @@ const CreateUser = (props) => {
         </label>
         <button
           // button is disabled unless user has entered all three required fields
-          disabled={!name && !username && !password}
+          disabled={!name || !username || !password}
           onClick={createUserRequest}
         >
           Submit & Create Account
