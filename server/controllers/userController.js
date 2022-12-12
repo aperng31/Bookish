@@ -10,14 +10,23 @@ userController.getAllUsers = () => {
 userController.findUser = (req, res, next) => {
   // write code here
   //[username, password]
+
   const userLogin = Object.values(req.body);
   //assuming the req body will be in an array.
   const mySQL =
-    'SELECT u.* from user u WHERE u.username = $1 AND u.password = $2';
+    'SELECT u.* from users u WHERE u.username = $1 AND u.password = $2';
 
   db.query(mySQL, userLogin)
     .then((data) => {
       res.locals.user = data.rows[0];
+      console.log('this is user data in login: ', res.locals.user)
+      if (!res.locals.user){return next({
+        log: `failed to find user`,
+        status: 400,
+        message: {
+          err: 'Wrong username or password',
+        },
+      })}
       return next();
     })
     .catch((err) => {
