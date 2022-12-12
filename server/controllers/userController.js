@@ -1,5 +1,5 @@
 //NEED MODEL
-const db = require('../models/starWarsModels');
+const db = require('../models/scratch_model.js');
 
 const userController = {};
 
@@ -15,7 +15,6 @@ userController.findUser = (req, res, next) => {
   const mySQL =
     'SELECT u.* from user u WHERE u.username = $1 AND u.password = $2';
 
-  // const diffSQL = 'SELECT p.name AS Character, s.name FROM public.people p LEFT OUTER JOIN public.species s ON p.species_id = s._id';
   db.query(mySQL, userLogin)
     .then((data) => {
       res.locals.user = data.rows[0];
