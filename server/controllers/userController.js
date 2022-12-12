@@ -33,6 +33,7 @@ userController.findUser = (req, res, next) => {
 
 userController.createUser = (req, res, next) => {
   // write code here
+  //input - req.body --> [name, username, password]
   const user = Object.values(req.body);
   const mySQL =
     'INSERT INTO users (name, username, password) OUTPUT Inserted._id VALUES ($1, $2, $3)';

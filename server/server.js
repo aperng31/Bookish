@@ -6,8 +6,8 @@ const PORT = 8080;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const userController = require('../controllers/userController');
-const bookController = require('./server/controllers/bookController');
+const userController = require('./controllers/userController');
+const bookController = require('./controllers/bookController');
 
 //handling static files from public I hope...
 app.use(express.static(path.resolve(__dirname, '../public')));
@@ -15,6 +15,8 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 //Do we want to use routers or no?
 
 //USERS
+//input (req.body) --> username and passsword
+
 app.post(
   '/login',
   userController.findUser,
@@ -27,6 +29,7 @@ app.post(
   }
 );
 
+//input:  req.body: name, username, password
 app.post(
   '/signup',
   userController.createUser,
