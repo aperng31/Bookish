@@ -1,3 +1,6 @@
+// import React from 'react'
+import BookContainer from './components/BookContainer.jsx'
+import Header from './components/Header.jsx'
 import React, { useState } from 'react'
 import Login from './components/Login'
 import CreateUser from './components/CreateUser'
@@ -7,7 +10,7 @@ import './stylesheets/styles.scss'
 export const CURRENT_SCREEN_MAP = {
   login: 'login',
   createUser: 'createUser',
-  dashboard: 'dashboard',
+  bookContainer: 'bookContainer',
 }
 
 const App = () => {
@@ -15,6 +18,11 @@ const App = () => {
   const [currentScreen, setCurrentScreen] = useState(CURRENT_SCREEN_MAP.login)
 
   return (
+    // <div>
+    //   <Header />
+    //   <BookContainer />      
+    // </div>
+
     <div className="app-page">
       {/* if the current screen state is createUser, we render the createUser component*/}
       {currentScreen === CURRENT_SCREEN_MAP.createUser && (
@@ -25,9 +33,9 @@ const App = () => {
         <Login setCurrentScreen={setCurrentScreen} />
       )}
       {/* if the current screen state in dashboard, we render the dashboard component */}
-      {/* {currentScreen === CURRENT_SCREEN_MAP.dashboard && (
-        <Dashboard setCurrentScreen={setCurrentScreen} />
-      )} */}
+      {currentScreen === CURRENT_SCREEN_MAP.bookContainer && (
+        <BookContainer setCurrentScreen={setCurrentScreen} />
+      )}
     </div>
   )
 }

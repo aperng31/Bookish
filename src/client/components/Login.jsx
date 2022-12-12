@@ -16,20 +16,21 @@ const Login = (props) => {
       username,
       password,
     }
-    try {
-      const response = await fetch('WHATEVERENDPOINT', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestBody),
-      })
-      const data = await response.json()
-      if (data) {
-        props.setCurrentScreen(CURRENT_SCREEN_MAP.dashboard)
-      }
-    } catch (err) {
-      console.log(err)
-      window.alert(err)
-    }
+    // try {
+    //   const response = await fetch('WHATEVERENDPOINT', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(requestBody),
+    //   })
+    //   const data = await response.json()
+    //   if (data) {
+    //     props.setCurrentScreen(CURRENT_SCREEN_MAP.bookContainer)
+    //   }
+    // } catch (err) {
+    //   console.log(err)
+    //   window.alert(err)
+    // }
+    props.setCurrentScreen(CURRENT_SCREEN_MAP.bookContainer)
   }
 
   // console.log(props)
