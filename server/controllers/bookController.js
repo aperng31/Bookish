@@ -12,7 +12,7 @@ bookController.getAllBooks = (req, req, next) => {
 };
 
 //query to get a list of the users books
-//output:[{_id, name, author, genre_id, genre}...]
+//output:[{_id, name, author, genre_id, genre_name}...]
 bookController.getUserBooks = (req, res, next) => {
   // write code here
   //Should have this for either when someone logs in or when someone enters a new entry
