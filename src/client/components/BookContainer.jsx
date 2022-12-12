@@ -4,6 +4,7 @@ import { getBooks } from '../redux/bookSlice'
 import BookCard from './BookCard.jsx'
 import CreateBookButton from './CreateBookButton.jsx'
 import CreateBookModal from './CreateBookModal.jsx'
+import Header from './Header';
 import '../styles/books.scss'
 import Modal from 'react-modal'
 
@@ -11,7 +12,7 @@ function BookContainer() {
 
   const [createBookModal, toggleCreate] = React.useState(false);
   const [loginModal, toggleLogin] = React.useState(true);
-  
+
   function openModal() {
     toggleCreate(true);
   }
@@ -31,6 +32,7 @@ function BookContainer() {
 
   return (
     <div id='book-container'>
+      <Header />
       <CreateBookButton toggleCreateModal={ openModal }/>
       <CreateBookModal createBookModal={ createBookModal } closeModal={ closeModal }/>
       {bookArray}

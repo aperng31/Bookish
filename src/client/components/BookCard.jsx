@@ -3,7 +3,7 @@ import React from 'react';
 function BookCard(props) {
   // console.log('props', props);
 
-  const [updateBook, toggleUpdate] = React.useState(false);
+  const [updateBookState, toggleUpdate] = React.useState(false);
   
   function updateBook() {
     //render update input
@@ -24,7 +24,8 @@ function BookCard(props) {
   }
   return (
     <div className='book-card'>
-      <h4><span>Title: </span> {props.title}</h4>
+      <h4><span>Title: {props.title}</span> </h4>
+      <input type='text' defaultValue={props.title}></input>
       <h4><span>Author: </span>{props.author}</h4>
 
       {/* <button onClick={() => props.moreInfo(props.book_id) }>More Info</button> */}

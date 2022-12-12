@@ -8,6 +8,7 @@ module.exports = {
    * to use its built-in optimizations accordingly. default is production
    */
   mode: process.env.NODE_ENV,
+  // mode: 'development',
   /** "entry"
    * the entry point
    */

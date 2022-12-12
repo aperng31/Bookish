@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@400;600;700&family=Montserrat:wght@300&family=Pacifico&family=Roboto:ital,wght@0,400;0,700;1,900&display=swap');
+// https://i.imgur.com/0kjMcUe.png
+
+$cream: #f6d5c6;
+$beige: #f7cf9b;
+
+.login {
+  background: rgba(22, 22, 23, 0.7);
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: white;
+  font-size: 25px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.app-page {
+  background: $cream;
+  //   background: $beige;
+  min-width: 100vw;
+  min-height: 100vh;
+  background: url('../icons/background.png');
+  filter: brightness(0.95) sepia(30%) saturate(80%);
+}
+
+label {
+  display: flex;
+  align-items: center;
+  input {
+    flex-grow: 1;
+    border: none;
+    width: 180px;
+    padding: 10px;
+    border-radius: 3rem;
+    margin: 10px;
+  }
+}
+
+button {
+  margin-top: 25px;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 10px;
+  backdrop-filter: white;
+  border-radius: 3rem;
+  border: none;
+  font-size: 14px;
+}
+
+.divider {
+  //   width: 100px;
+  border-top: 1px solid white;
+  filter: opacity(50%);
+  margin-top: 30px;
+}
