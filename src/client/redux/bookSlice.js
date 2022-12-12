@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const temp = [{title: 'the battle of orange', author: 'helloworld'},
-              {title: 'fibonacci\'s spiderman', author: 'goodbyeworld'}]
+const temp = [{title: 'the battle of orange', author: 'helloworld', genre: 'historical', book_id: 1 },
+              {title: 'fibonacci\'s spiderman', author: 'goodbyeworld', genre: 'fantasy', book_id: 2 }]
 const initialState = {
   //some sort of 'user logged in' state
   bookModal: false, //show modal when requested
-  bookData: [], // []
+  bookData: temp, // []
 }
 
 export const bookSlice = createSlice({

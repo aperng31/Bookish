@@ -26,7 +26,7 @@ function BookContainer() {
   const bookArray = [];
 
   for(let i = 0; i < bookData.length; i++) {
-    const newBook = <BookCard title={ bookData[i].title } author={ bookData[i].author }/>
+    const newBook = <BookCard bookData={ bookData[i] } />
     bookArray.push(newBook);
   }
 

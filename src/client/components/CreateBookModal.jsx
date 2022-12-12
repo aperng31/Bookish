@@ -51,11 +51,14 @@ function CreateBookModal(props) {
       <form>
         <input type='text' placeholder='Title' onChange={(e) => newTitle(e.target.value)}/>
         <input type='text' placeholder='Author' onChange={(e) => newAuthor(e.target.value)}/>
-        <div className="">
+        <div className="" >
           <select onChange={(e) => newGenre(e.target.value)}>
-            <option value="fantasy">Fantasy</option>
+            <option value="none" selected disabled hidden>Select an Genre</option>
+            <option value="fantasy">Thriller</option>
+            <option value="mystery">Fantasy</option>
+            <option value="horror">Horror</option>
             <option value="mystery">Mystery</option>
-            <option value="biography">Biography</option>
+            <option value="contemporary">Contemporary</option>
           </select>
         </div>  
       </form>
