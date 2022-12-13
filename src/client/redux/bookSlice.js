@@ -1,7 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const temp = [{title: 'the battle of orange', author: 'helloworld', genre: 'historical', book_id: 1 },
-              {title: 'fibonacci\'s spiderman', author: 'goodbyeworld', genre: 'fantasy', book_id: 2 }]
+const temp = [
+  {
+    title: 'the battle of orange',
+    author: 'helloworld',
+    genre: 'historical',
+    book_id: 1,
+  },
+  {
+    title: "fibonacci's spiderman",
+    author: 'goodbyeworld',
+    genre: 'fantasy',
+    book_id: 2,
+  },
+]
 const initialState = {
   //some sort of 'user logged in' state
   bookModal: false, //show modal when requested
@@ -21,11 +33,10 @@ export const bookSlice = createSlice({
       //fetch all books with current user_id
       //set to bookArray
       state.bookModal = !state.bookModal
-      console.log('in setbooks');
-      console.log(data);
+      console.log('in setbooks')
+      console.log(data)
       return 5
     },
-
   },
 })
 
