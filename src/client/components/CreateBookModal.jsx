@@ -25,13 +25,14 @@ function CreateBookModal(props) {
   const [genre, newGenre] = React.useState('');
 
   function createBookReq() {
-    const body = { author, title: title, genre_string: genre, user_id: props.userData.user_id };
+    const body = { author, name: title, genre_name: genre, user_id: props.userData.user_id };
     console.log(body)
 
     const options = { method: 'POST', headers: { 'Content-Type': 'Application/JSON' }, body: JSON.stringify(body) };
     fetch('/books', options)
     .then(res => res.json())
     .then(res => {
+      // console.log('createbook res', res);
       props.setBooks(res);
       props.closeModal();
       //close modal, redirect to home page (which re-fetchs?)
@@ -59,8 +60,8 @@ function CreateBookModal(props) {
         <div className="" >
           <select onChange={(e) => newGenre(e.target.value)}>
             <option value="none" selected disabled hidden>Select an Genre</option>
-            <option value="fantasy">Thriller</option>
-            <option value="mystery">Fantasy</option>
+            <option value="thriller">Thriller</option>
+            <option value="fantasy">Fantasy</option>
             <option value="horror">Horror</option>
             <option value="mystery">Mystery</option>
             <option value="contemporary">Contemporary</option>

@@ -28,8 +28,7 @@ function BookContainer() {
   const bookData = useSelector(state => state.book.bookData);
   const userData = useSelector(state => state.user);
   const bookArray = [];
-  console.log(userData);
-  console.log(bookData);
+
   for(let i = 0; i < bookData.length; i++) {
     const newBook = <BookCard bookData={ bookData[i] } userData={ userData }
     setBooks={(pl) => dispatch(setBooks(pl))}/>

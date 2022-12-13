@@ -24,9 +24,7 @@ const Login = (props) => {
       })
       const data = await response.json()
       if (data) {
-        console.log(data);
-        console.log('in login')
-        console.log(props);
+
         props.setUser(data.user)
         props.setBooks(data.userBooks);
         
