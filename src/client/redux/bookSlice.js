@@ -1,30 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const temp = [
-  {
-    title: 'the battle of orange',
-    author: 'helloworld',
-    genre: 'historical',
-    book_id: 1,
-  },
-  {
-    title: "fibonacci's spiderman",
-    author: 'goodbyeworld',
-    genre: 'fantasy',
-    book_id: 2,
-  },
-]
 const initialState = {
   //some sort of 'user logged in' state
-  bookModal: false, //show modal when requested
-  bookData: temp, // []
+  // bookModal: false, //show modal when requested
+  bookData: [], // []
 }
 
 export const bookSlice = createSlice({
   name: 'book',
   initialState,
   reducers: {
-    setBooks: (state, data) => {
+    setBooks: (state, action) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
@@ -32,10 +18,9 @@ export const bookSlice = createSlice({
       //called upon successful login
       //fetch all books with current user_id
       //set to bookArray
-      state.bookModal = !state.bookModal
-      console.log('in setbooks')
-      console.log(data)
-      return 5
+      console.log('in setbooks');
+      state.bookData = action.payload;
+      console.log(state.bookData);
     },
   },
 })

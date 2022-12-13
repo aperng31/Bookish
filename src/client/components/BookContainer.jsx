@@ -25,54 +25,23 @@ function BookContainer() {
   // const bookData = useSelector((state) => state.book.bookData)
   // const bookArray = []
 
-  // let bookRow = []
-  // for (let i = 0; i < bookData.length; i++) {
-  //   const newBook = <BookCard bookData={bookData[i]} />
-  //   // bookArray.push(newBook)
-  //   bookRow.push(newBook)
-  //   if (bookRow.length === 6) {
-  //     bookArray.push(bookRow)
-  //     bookRow = []
-  //   }
-  //   if (i === bookData.length - 1 && bookRow.length) {
-  //     bookArray.push(bookRow)
-  //   }
-  // }
-  // console.log(bookArray)
-  const renderBooks = () => {
-    const bookData = useSelector((state) => state.book.bookData)
-    const bookArray = []
+  const bookData = useSelector(state => state.book.bookData);
+  const userData = useSelector(state => state.user);
+  const bookArray = [];
 
-    let bookRow = []
-    for (let i = 0; i < bookData.length; i++) {
-      const newBook = <BookCard bookData={bookData[i]} />
-      // bookArray.push(newBook)
-      bookRow.push(newBook)
-      if (bookRow.length === 6) {
-        bookArray.push(bookRow)
-        bookRow = []
-      }
-      if (i === bookData.length - 1 && bookRow.length) {
-        bookArray.push(bookRow)
-      }
-    }
-    return bookArray.map((bookRow) => {
-      return <BookShelf bookRow={bookRow} />
-    })
+  for(let i = 0; i < bookData.length; i++) {
+    const newBook = <BookCard bookData={ bookData[i] } userData={ userData }
+    setBooks={(pl) => dispatch(setBooks(pl))}/>
+    bookArray.push(newBook);
   }
   return (
-    <>
-      <div id="book-container">
-        <Header />
-        <CreateBookButton toggleCreateModal={openModal} />
-        <CreateBookModal
-          createBookModal={createBookModal}
-          closeModal={closeModal}
-        />
-        {/* {bookArray} */}
-      </div>
-      {renderBooks()}
-    </>
+    <div id='book-container'>
+      <Header userData={ userData }/>
+      <CreateBookButton toggleCreateModal={ openModal }/>
+      <CreateBookModal createBookModal={ createBookModal } closeModal={ closeModal }
+      userData={ userData } setBooks={(pl) => dispatch(setBooks(pl))}/>
+      {bookArray}
+    </div>
   )
 }
 
