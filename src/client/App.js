@@ -19,9 +19,12 @@ export const CURRENT_SCREEN_MAP = {
 
 const App = () => {
   //setting the current state to be login
-  const [currentScreen, setCurrentScreen] = useState(CURRENT_SCREEN_MAP.login)
+  // const [currentScreen, setCurrentScreen] = useState(CURRENT_SCREEN_MAP.login)
+  const [currentScreen, setCurrentScreen] = useState(
+    CURRENT_SCREEN_MAP.login,
+  )
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   // const setBooks = () => {dispatch(setBooks())};
   const initState = useSelector(state => state.book.bookData);
   console.log('app') 
@@ -29,7 +32,7 @@ const App = () => {
   return (
     // <div>
     //   <Header />
-    //   <BookContainer />      
+    //   <BookContainer />
     // </div>
 
     <div className="app-page">

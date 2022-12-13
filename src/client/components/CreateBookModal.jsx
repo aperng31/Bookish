@@ -25,10 +25,15 @@ function CreateBookModal(props) {
   const [genre, newGenre] = React.useState('');
 
   function createBookReq() {
-    const body = { author, title, genre, user_id: props.user_id };
+    const body = { author, title: title, genre_string: genre, user_id: props.userData.user_id };
+    console.log(body)
+
     const options = { method: 'POST', headers: { 'Content-Type': 'Application/JSON' }, body: JSON.stringify(body) };
-    fetch('/addbook', options)
+    fetch('/books', options)
+    .then(res => res.json())
     .then(res => {
+      props.setBooks(res);
+      props.closeModal();
       //close modal, redirect to home page (which re-fetchs?)
     })
     .catch(err => {
