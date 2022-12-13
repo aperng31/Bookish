@@ -16,7 +16,7 @@ bookController.getAllBooks = (req, res, next) => {
 bookController.getUserBooks = (req, res, next) => {
   // write code here
   //Should have this for either when someone logs in or when someone enters a new entry
-  console.log('we are in getUserBooks');
+  console.log('we are in getUserBooks: ', res.locals.user._id);
   const id = [res.locals.user._id];
 
   //this should get all the entries of books where c.book_id = b._ID and u._id = c.user_ID when u._id = entry
@@ -30,8 +30,7 @@ bookController.getUserBooks = (req, res, next) => {
   // const diffSQL = 'SELECT p.name AS Character, s.name FROM public.people p LEFT OUTER JOIN public.species s ON p.species_id = s._id';
   db.query(mySQL2, id)
     .then((data) => {
-      console.log('query successful, here is data: ', data.rows);
-
+      // console.log('query successful, here is data: ', data.rows);
       res.locals.userBooks = data.rows ? data.rows : [];
       return next();
     })
@@ -49,9 +48,9 @@ bookController.getUserBooks = (req, res, next) => {
 
 bookController.findBook = (req, res, next) => {
   if (!res.locals.initialEntry) {
-    const { title, author, genre_string, user_id } = req.body;
+    const { name, author, genre_name, user_id } = req.body;
     console.log(req.body);
-    res.locals.initialEntry = [title, author, genre_string, user_id];
+    res.locals.initialEntry = [name, author, genre_name, user_id];
   }
   //[title/name, author, genre(STRING), user_id]
 
@@ -86,13 +85,13 @@ bookController.findGenre = (req, res, next) => {
   //I'm expecting userID to be in the reqBody for catalog purposes.
   //[title/name, author, genre(STRING), user_id]
   if (res.locals.foundBook) {
-    console.log('did we skip?');
+    // console.log('did we skip?');
     return next();
   }
   //the second value is for editting books...
   if (!res.locals.initialEntry) {
-    const { book_id, title, author, genre_string, user_id } = req.body;
-    res.locals.initialEntry = [book_id, title, author, genre_string, user_id];
+    const { book_id, name, author, genre_name, user_id } = req.body;
+    res.locals.initialEntry = [book_id, name, author, genre_name, user_id];
   }
   //This may need some work
 
@@ -197,11 +196,15 @@ bookController.deleteBook = (req, res, next) => {
 bookController.editBook = (req, res, next) => {
   //expecting book info [NEWname, NEWauthor, NEWgenre(string), user_id, book._id]
   //PROBLEM THIS WILL EDIT THE BOOK ENTRIES (DO WE WANT THIS?)
-  //id [book_id, NEWname, NEWauthor, NEWgenre(string), user_id, book._id, newgenre_id]
+  //id [NEWname, NEWauthor, NEWgenre_id, book._id]
+
   const arr = res.locals.initialEntry;
+  console.log(arr);
   const id = [arr[1], arr[2], res.locals.genre._id, arr[0]];
-  res.locals.user = { _id: id[3] };
-  const mySQL = 'UPDATE books b SET c2 = $1, c3 = $2 c4 = $3 WHERE b._id = $4';
+  console.log('in Editbook this is the info: ', id);
+  res.locals.user = { _id: arr[4] };
+  const mySQL =
+    'UPDATE books b SET name = $1, author = $2, genre = $3 WHERE b._id = $4';
   db.query(mySQL, id).then(() => {
     return next();
   });
