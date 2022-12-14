@@ -46,6 +46,10 @@ bookController.getUserBooks = (req, res, next) => {
     });
 };
 
+bookController.addBook = (req, res, next) => {
+  
+}
+
 bookController.findBook = (req, res, next) => {
   console.log('req.body.url: ', req.body.url);
   // req.body.url ==== "the+lord+of+the+rings"
