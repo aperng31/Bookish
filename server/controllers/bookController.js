@@ -46,38 +46,70 @@ bookController.getUserBooks = (req, res, next) => {
     });
 };
 
-bookController.findBook = (req, res, next) => {
-  if (!res.locals.initialEntry) {
-    const { name, author, genre_name, user_id } = req.body;
-    console.log(req.body);
-    res.locals.initialEntry = [name, author, genre_name, user_id];
-  }
-  //[title/name, author, genre(STRING), user_id]
+bookController.findBook = async (req, res, next) => {
+  // req.body.url ==== "the+lord+of+the+rings"
+  // fetch url = "http://openlibrary.org/search.json?q="
+  // add the string from req.body into our url for the fetch request
 
-  const id = [res.locals.initialEntry[0], res.locals.initialEntry[1]];
-  //should I make it case insensitive?
-  console.log('we are in findBook before query: ', id);
-  const mySQL = 'SELECT b.* FROM books b WHERE b.name = $1 AND b.author = $2';
+  const urlString = `http://openlibrary.org/search.json?q=${req.body.url}`;
 
-  db.query(mySQL, id)
-    .then((data) => {
-      console.log('successfully found');
-      if (data.rows[0]) {
-        res.locals.foundBook = true;
-        res.locals.bookEntryID = data.rows[0];
-      }
-      return next();
-    })
-    .catch((err) => {
-      return next({
-        log: `Error in findBooks: ${err}`,
-        status: 400,
-        message: {
-          err: 'An error occurred. Check server logs for more details',
-        },
-      });
+  try {
+    // make the fetch request to open library
+    const respond = await fetch(urlString);
+    const data = await respond.json();
+    console.log('DATA FROM OL: ', data);
+    const bookArray = data.docs;
+    //
+    return bookArray.map((obj) => {
+      const coverID = obj.cover_i;
+      const title = obj.title;
+      const author = obj.author_name[0];
+      const pictureURL = `https://covers.openlibrary.org/b/id/${coverID}-S.jpg`;
+      console.log('DATA INSIDE MAP: ', coverID, title, author, pictureURL);
     });
+
+    return next();
+  } catch (err) {
+    return next({
+      log: 'error fetching data from the API',
+      message: { error: err },
+    });
+  }
 };
+
+// original code
+// bookController.findBook = (req, res, next) => {
+//   if (!res.locals.initialEntry) {
+//     const { name, author, genre_name, user_id } = req.body;
+//     console.log(req.body);
+//     res.locals.initialEntry = [name, author, genre_name, user_id];
+//   }
+//   //[title/name, author, genre(STRING), user_id]
+
+//   const id = [res.locals.initialEntry[0], res.locals.initialEntry[1]];
+//   //should I make it case insensitive?
+//   console.log('we are in findBook before query: ', id);
+//   const mySQL = 'SELECT b.* FROM books b WHERE b.name = $1 AND b.author = $2';
+
+//   db.query(mySQL, id)
+//     .then((data) => {
+//       console.log('successfully found');
+//       if (data.rows[0]) {
+//         res.locals.foundBook = true;
+//         res.locals.bookEntryID = data.rows[0];
+//       }
+//       return next();
+//     })
+//     .catch((err) => {
+//       return next({
+//         log: `Error in findBooks: ${err}`,
+//         status: 400,
+//         message: {
+//           err: 'An error occurred. Check server logs for more details',
+//         },
+//       });
+//     });
+// };
 
 //input: req.body with {[title/name, author, genre, (user_id)]}
 //output: res.local.genre_id = {_id}

@@ -54,19 +54,30 @@ app.post(
 
 //this should try to find a book, if not found: create an entry, and return the user's list of books
 //if found, skip to create catalog
-app.post(
-  '/books',
-  bookController.findBook,
-  bookController.findGenre,
-  bookController.createBook,
-  bookController.findBook,
-  bookController.createCatalogEntry,
-  bookController.getUserBooks,
-  (req, res) => {
-    console.log('this is createEntries');
-    res.status(202).send(res.locals.userBooks);
-  }
-);
+
+app.get('/books', (req, res) => {
+  console.log('this is createEntries');
+  res.status(202).send('store data in res.locals and end back to frontend');
+});
+
+app.post('/books', bookController.findBook, (req, res) => {
+  res.status(200).send(res.locals.data);
+});
+
+// original post request
+// app.post(
+//   '/books',
+//   bookController.findBook,
+//   bookController.findGenre,
+//   bookController.createBook,
+//   bookController.findBook,
+//   bookController.createCatalogEntry,
+//   bookController.getUserBooks,
+//   (req, res) => {
+//     console.log('this is createEntries');
+//     res.status(202).send(res.locals.userBooks);
+//   }
+// );
 
 //NEED TO WORK ON THESE SOON
 app.delete(
