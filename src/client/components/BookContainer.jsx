@@ -21,6 +21,8 @@ function BookContainer() {
     toggleCreate(false);
   }
 
+  const dispatch = useDispatch();
+
   //This method takes a flat array and turns it into an array of book row arrays
   //with each book row array containing upto 6 book cards.
 
@@ -56,7 +58,8 @@ function BookContainer() {
         <CreateBookModal
           createBookModal={createBookModal}
           closeModal={closeModal}
-          userData={useSelector((state) => state.user)}
+          // userData={userData}
+          setBooks={(pl) => dispatch(setBooks(pl))}
         />
         {/* {bookArray} */}
       </div>

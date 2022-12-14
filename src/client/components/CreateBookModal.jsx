@@ -24,29 +24,39 @@ function CreateBookModal(props) {
   const [title, newTitle] = React.useState('');
   const [genre, newGenre] = React.useState('');
 
-  function createBookReq() {
-    const body = {
-      author,
-      title,
-      genre,
-      user_id: props.userData.user_id,
-    };
-    console.log(body);
+  // function createBookReq() {
+  //   // const body = { author, name: title, genre_name: genre, user_id: props.userData.user_id };
+  //   const body = { author, name: title, genre_name: genre };
+  //   // console.log(body);
 
-    const options = {
+  //   const options = {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'Application/JSON' },
+  //     body: JSON.stringify(body),
+  //   };
+  //   fetch('/books', options)
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       console.log('createbook res', res);
+  //       props.setBooks(res);
+  //       props.closeModal();
+  //       //close modal, redirect to home page (which re-fetchs?)
+  //     })
+  //     .catch((err) => {});
+  // }
+
+  function bookSearch(e) {
+    e.preventDefault;
+    const userInput = document.querySelector('#title').value;
+    const url = userInput.replace(' ', '+');
+    // console.log(JSON.stringify({ inputPlus }));
+    fetch('http://localhost:3000/books', {
       method: 'POST',
       headers: { 'Content-Type': 'Application/JSON' },
-      body: JSON.stringify(body),
-    };
-    fetch('/books', options)
-      .then((res) => res.json())
-      .then((res) => {
-        // console.log('createbook res', res);
-        props.setBooks(res);
-        props.closeModal();
-        //close modal, redirect to home page (which re-fetchs?)
-      })
-      .catch((err) => {});
+      body: JSON.stringify({ url }),
+    })
+      // .then((res) => res.json())
+      .then((res) => console.log(res));
   }
 
   return (
@@ -59,19 +69,22 @@ function CreateBookModal(props) {
       // createBook={ createBook }
     >
       <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-      <button onClick={props.closeModal}>Cancel</button>
       <div>Add Book</div>
       <form>
         <input
           type="text"
+          id="title"
           placeholder="Title"
           onChange={(e) => newTitle(e.target.value)}
         />
-        <input
-          type="text"
-          placeholder="Author"
+        <button type="button" onClick={bookSearch}>
+          Search
+        </button>
+        {/* <input
+          type='text'
+          placeholder='Author'
           onChange={(e) => newAuthor(e.target.value)}
-        />
+        /> */}
         <div className="">
           <select onChange={(e) => newGenre(e.target.value)}>
             <option value="none" selected disabled hidden>
@@ -85,7 +98,8 @@ function CreateBookModal(props) {
           </select>
         </div>
       </form>
-      <button onClick={() => createBookReq()}>Add Book</button>
+      <button>Add Book</button>
+      <button onClick={props.closeModal}>Cancel</button>
     </Modal>
   );
 }
