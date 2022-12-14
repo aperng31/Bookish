@@ -47,6 +47,7 @@ bookController.getUserBooks = (req, res, next) => {
 };
 
 bookController.findBook = (req, res, next) => {
+  console.log('req.body.url: ', req.body.url);
   // req.body.url ==== "the+lord+of+the+rings"
   // fetch url = "http://openlibrary.org/search.json?q="
   // add the string from req.body into our url for the fetch request
