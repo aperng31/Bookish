@@ -1,5 +1,6 @@
 //NEED MODEL
 const db = require('../models/scratch_model.js');
+// const nodefetch = require('node-fetch');
 
 const bookController = {};
 
@@ -46,55 +47,97 @@ bookController.getUserBooks = (req, res, next) => {
     });
 };
 
-// bookController.findBook = (req, res, next) => {
-//   console.log('req.body.url: ', req.body.url);
-//   // req.body.url ==== "the+lord+of+the+rings"
-//   // fetch url = "http://openlibrary.org/search.json?q="
-//   // add the string from req.body into our url for the fetch request
+bookController.addBook = (req, res, next) => {
+  
+}
 
-//   const urlString = `http://openlibrary.org/search.json?q=${req.body.url}`;
-//   fetch(urlString)
-//     .then((response) => response.json())
-//     .then((data) => {
-//       const bookArray = data.docs;
-//       let pictureURL;
-//       const resultArray = bookArray.map((obj) => {
-//         let id;
-//         if (obj.isbn && typeof obj.isbn === 'String') {
-//           id = obj.isbn;
-//           pictureURL = `https://covers.openlibrary.org/b/isbn/${id}-M.jpg`;
-//         } else if (obj.isbn && Array.isArray(obj.isbn)) {
-//           id = obj.isbn[0];
-//           pictureURL = `https://covers.openlibrary.org/b/isbn/${id}-M.jpg`;
-//         } else if (obj.cover_i && typeof obj.cover_i === 'String') {
-//           id = obj.cover_i;
-//           pictureURL = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
-//         } else if (obj.cover_i && Array.isArray(obj.cover_i)) {
-//           id = obj.cover_i[0];
-//           pictureURL = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
-//         } else {
-//           pictureURL = 'NO PICTURE';
-//         }
-//         const title = obj.title;
-//         // const author = obj.author_name
-//         let author;
-//         if (Array.isArray(obj.author_name)) {
-//           author = obj.author_name[0];
-//         } else {
-//           author = obj.author_name;
-//         }
+bookController.findBook = (req, res, next) => {
+  console.log('req.body.url: ', req.body.url);
+  // req.body.url ==== "the+lord+of+the+rings"
+  // fetch url = "http://openlibrary.org/search.json?q="
+  // add the string from req.body into our url for the fetch request
 
-//         // console.log('DATA INSIDE MAP: ', coverID, title, author, pictureURL);
-//         return {
-//           title,
-//           author,
-//           pictureURL,
-//         };
-//       });
-//       res.locals.data = resultArray;
-//       return next();
-//     });
-// };
+  const urlString = `http://openlibrary.org/search.json?q=${req.body.url}`;
+  fetch(urlString)
+    .then((response) => response.json())
+    .then((data) => {
+      const bookArray = data.docs;
+      let pictureURL;
+      const resultArray = bookArray.map((obj) => {
+        let id;
+        if (obj.isbn && typeof obj.isbn === 'String') {
+          id = obj.isbn;
+          pictureURL = `https://covers.openlibrary.org/b/isbn/${id}-M.jpg`;
+        } else if (obj.isbn && Array.isArray(obj.isbn)) {
+          id = obj.isbn[0];
+          pictureURL = `https://covers.openlibrary.org/b/isbn/${id}-M.jpg`;
+        } else if (obj.cover_i && typeof obj.cover_i === 'String') {
+          id = obj.cover_i;
+          pictureURL = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
+        } else if (obj.cover_i && Array.isArray(obj.cover_i)) {
+          id = obj.cover_i[0];
+          pictureURL = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
+        } else {
+          pictureURL = 'NO PICTURE';
+        }
+        const title = obj.title;
+        // const author = obj.author_name
+        let author;
+        if (Array.isArray(obj.author_name)) {
+          author = obj.author_name[0];
+        } else {
+          author = obj.author_name;
+        }
+
+bookController.findBook = (req, res, next) => {
+  console.log('req.body.url: ', req.body.url);
+  // req.body.url ==== "the+lord+of+the+rings"
+  // fetch url = "http://openlibrary.org/search.json?q="
+  // add the string from req.body into our url for the fetch request
+
+  const urlString = `http://openlibrary.org/search.json?q=${req.body.url}`;
+  fetch(urlString)
+    .then((response) => response.json())
+    .then((data) => {
+      const bookArray = data.docs;
+      let pictureURL;
+      const resultArray = bookArray.map((obj) => {
+        let id;
+        if (obj.isbn && typeof obj.isbn === 'String') {
+          id = obj.isbn;
+          pictureURL = `https://covers.openlibrary.org/b/isbn/${id}-M.jpg`;
+        } else if (obj.isbn && Array.isArray(obj.isbn)) {
+          id = obj.isbn[0];
+          pictureURL = `https://covers.openlibrary.org/b/isbn/${id}-M.jpg`;
+        } else if (obj.cover_i && typeof obj.cover_i === 'String') {
+          id = obj.cover_i;
+          pictureURL = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
+        } else if (obj.cover_i && Array.isArray(obj.cover_i)) {
+          id = obj.cover_i[0];
+          pictureURL = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
+        } else {
+          pictureURL = 'NO PICTURE';
+        }
+        const title = obj.title;
+        // const author = obj.author_name
+        let author;
+        if (Array.isArray(obj.author_name)) {
+          author = obj.author_name[0];
+        } else {
+          author = obj.author_name;
+        }
+
+        // console.log('DATA INSIDE MAP: ', coverID, title, author, pictureURL);
+        return {
+          title,
+          author,
+          pictureURL,
+        };
+      });
+      res.locals.data = resultArray;
+      return next();
+    });
+};
 
 // original code
 // bookController.findBook = (req, res, next) => {

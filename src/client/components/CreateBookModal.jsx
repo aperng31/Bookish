@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/books.scss';
 import Modal from 'react-modal';
-import SearchResults from './SearchResults';
+import SearchResult from './SearchResult';
 
 function CreateBookModal(props) {
   let subtitle;
@@ -48,7 +48,7 @@ function CreateBookModal(props) {
   function bookSearch(e) {
     e.preventDefault;
     const userInput = document.querySelector('#title').value;
-    const url = userInput.replace(' ', '+');
+    const url = userInput.replaceAll(' ', '+');
     console.log(JSON.stringify({ url }));
     fetch('http://localhost:3000/books', {
       method: 'POST',
@@ -59,7 +59,18 @@ function CreateBookModal(props) {
       .then((data) => {
         console.log(data);
       });
-    // .then((res) => <SearchResults books={res} />);
+    // .then((data) => {
+    //   for (let i = 0; i < 8; i++) {
+    //     const books = [];
+    //     const bookData = {
+    //       author: data[i].author,
+    //       title: data[i].title,
+    //       pictureURL: data[i].pictureURL,
+    //     };
+    //     books.push(<SearchResult bookData={bookData} />);
+    //     return books;
+    //   }
+    // });
   }
 
   return (
@@ -89,19 +100,18 @@ function CreateBookModal(props) {
           onChange={(e) => newAuthor(e.target.value)}
         /> */}
         <div className="">
-          <select onChange={(e) => newGenre(e.target.value)}>
-            <option value="none" selected disabled hidden>
+          {/* <select onChange={(e) => newGenre(e.target.value)}>
+            <option value='none' selected disabled hidden>
               Select an Genre
             </option>
-            <option value="thriller">Thriller</option>
-            <option value="fantasy">Fantasy</option>
-            <option value="horror">Horror</option>
-            <option value="mystery">Mystery</option>
-            <option value="contemporary">Contemporary</option>
-          </select>
+            <option value='thriller'>Thriller</option>
+            <option value='fantasy'>Fantasy</option>
+            <option value='horror'>Horror</option>
+            <option value='mystery'>Mystery</option>
+            <option value='contemporary'>Contemporary</option>
+          </select> */}
         </div>
       </form>
-      <button>Add Book</button>
       <button onClick={props.closeModal}>Cancel</button>
     </Modal>
   );
