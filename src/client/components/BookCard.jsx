@@ -72,7 +72,7 @@ function BookCard(props) {
       .then((res) => res.json())
       .then((res) => {
         // console.log(res);
-        props.props.props.setBooks(res);
+        props.setBooks(res);
         //close modal, redirect to home page to re-fetch data
       });
   }
