@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/books.scss';
 import Modal from 'react-modal';
+import SearchResults from './SearchResults';
 
 function CreateBookModal(props) {
   let subtitle;
@@ -44,7 +45,6 @@ function CreateBookModal(props) {
   //     })
   //     .catch((err) => {});
   // }
-
   function bookSearch(e) {
     e.preventDefault;
     const userInput = document.querySelector('#title').value;
@@ -55,8 +55,8 @@ function CreateBookModal(props) {
       headers: { 'Content-Type': 'Application/JSON' },
       body: JSON.stringify({ url }),
     })
-      // .then((res) => res.json())
-      .then((res) => console.log(res));
+      // .then((res) => console.log(res));
+      .then((res) => <SearchResults books={res} />);
   }
 
   return (
