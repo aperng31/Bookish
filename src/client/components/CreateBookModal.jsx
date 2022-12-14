@@ -65,19 +65,19 @@ function CreateBookModal(props) {
       onAfterOpen={afterOpenModal}
       onRequestClose={props.closeModal}
       style={customStyles}
-      contentLabel='Add Book'
+      contentLabel="Add Book"
       // createBook={ createBook }
     >
       <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
       <div>Add Book</div>
       <form>
         <input
-          type='text'
-          id='title'
-          placeholder='Title'
+          type="text"
+          id="title"
+          placeholder="Title"
           onChange={(e) => newTitle(e.target.value)}
         />
-        <button type='button' onClick={bookSearch}>
+        <button type="button" onClick={bookSearch}>
           Search
         </button>
         {/* <input
@@ -85,16 +85,16 @@ function CreateBookModal(props) {
           placeholder='Author'
           onChange={(e) => newAuthor(e.target.value)}
         /> */}
-        <div className=''>
+        <div className="">
           <select onChange={(e) => newGenre(e.target.value)}>
-            <option value='none' selected disabled hidden>
+            <option value="none" selected disabled hidden>
               Select an Genre
             </option>
-            <option value='thriller'>Thriller</option>
-            <option value='fantasy'>Fantasy</option>
-            <option value='horror'>Horror</option>
-            <option value='mystery'>Mystery</option>
-            <option value='contemporary'>Contemporary</option>
+            <option value="thriller">Thriller</option>
+            <option value="fantasy">Fantasy</option>
+            <option value="horror">Horror</option>
+            <option value="mystery">Mystery</option>
+            <option value="contemporary">Contemporary</option>
           </select>
         </div>
       </form>

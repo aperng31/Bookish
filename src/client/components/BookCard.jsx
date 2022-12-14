@@ -1,14 +1,20 @@
 import React from 'react';
 
 function BookCard(props) {
-  console.log('props', props);
+  console.log('props in BookCard', props);
 
   const [regularDisplayState, toggleDisplay] = React.useState('block');
   const [updateDisplayState, toggleUpdate] = React.useState('none');
 
-  const [newUpdatedAuthor, newAuthor] = React.useState(props.bookData.author);
-  const [newUpdatedTitle, newTitle] = React.useState(props.bookData.name);
-  const [newUpdatedGenre, newGenre] = React.useState(props.bookData.genre_name);
+  const [newUpdatedAuthor, newAuthor] = React.useState(
+    props.props.props.bookData.author
+  );
+  const [newUpdatedTitle, newTitle] = React.useState(
+    props.props.props.bookData.name
+  );
+  const [newUpdatedGenre, newGenre] = React.useState(
+    props.props.props.bookData.genre_name
+  );
 
   function toggleUpdateDisplay() {
     //render update input
@@ -17,9 +23,9 @@ function BookCard(props) {
       toggleUpdate('block');
     } else {
       //if 'cancel' is clicked
-      newAuthor(props.bookData.author); //reset default values to original bookData
-      newTitle(props.bookData.name);
-      newGenre(props.bookData.genre_name);
+      newAuthor(props.props.props.bookData.author); //reset default values to original bookData
+      newTitle(props.props.props.bookData.name);
+      newGenre(props.props.props.bookData.genre_name);
       toggleDisplay('block');
       toggleUpdate('none');
     }
@@ -28,11 +34,11 @@ function BookCard(props) {
   function updateBookReq() {
     // console.log(props.bookData._id)
     const body = {
-      book_id: props.bookData._id,
+      book_id: props.props.props.bookData._id,
       name: newUpdatedTitle,
       author: newUpdatedAuthor,
       genre_name: newUpdatedGenre,
-      user_id: props.userData.user_id,
+      user_id: props.props.props.userData.user_id,
     };
     console.log(body);
     const options = {
@@ -53,8 +59,8 @@ function BookCard(props) {
   function deleteBook() {
     // console.log(props);
     const body = {
-      user_id: props.userData.user_id,
-      book_id: props.bookData._id,
+      user_id: props.props.props.userData.user_id,
+      book_id: props.props.props.bookData._id,
     }; // user_id props.bookData.book_id
     const options = {
       method: 'DELETE',
@@ -72,15 +78,18 @@ function BookCard(props) {
   }
   return (
     <div className="book-card book">
+      <button className="closeBtn" onClick={() => props.props.setIsOpen(false)}>
+        x
+      </button>
       <h4>
         <span>
           Title:
           <span style={{ display: regularDisplayState }}>
-            {props.bookData.name}
+            {props.props.props.bookData.name}
           </span>
           <input
             type="text"
-            defaultValue={props.bookData.name}
+            defaultValue={props.props.props.bookData.name}
             style={{ display: updateDisplayState }}
             onChange={(e) => newTitle(e.target.value)}
           ></input>
@@ -90,11 +99,11 @@ function BookCard(props) {
         <span>
           Author:
           <span style={{ display: regularDisplayState }}>
-            {props.bookData.author}
+            {props.props.props.bookData.author}
           </span>
           <input
             type="text"
-            defaultValue={props.bookData.author}
+            defaultValue={props.props.props.bookData.author}
             style={{ display: updateDisplayState }}
             onChange={(e) => newAuthor(e.target.value)}
           ></input>
@@ -104,7 +113,7 @@ function BookCard(props) {
         <span>
           Genre:
           <span style={{ display: regularDisplayState }}>
-            {props.bookData.genre_name}
+            {props.props.props.bookData.genre_name}
           </span>
           <div className="" style={{ display: updateDisplayState }}>
             <select onChange={(e) => newGenre(e.target.value)}>

@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setBooks } from '../redux/bookSlice';
 import BookCard from './BookCard.jsx';
+import BookCover from './BookCover.jsx';
 import CreateBookButton from './CreateBookButton.jsx';
 import CreateBookModal from './CreateBookModal.jsx';
 import Header from './Header';
@@ -27,12 +28,14 @@ function BookContainer() {
 
   const renderBooks = () => {
     const bookData = useSelector((state) => state.book.bookData);
-    // const userData = useSelector((state) => state.user);
+    const userData = useSelector((state) => state.user);
     const bookArray = [];
 
     let bookRow = [];
     for (let i = 0; i < bookData.length; i++) {
-      const newBook = <BookCard bookData={bookData[i]} key={i} />;
+      const newBook = (
+        <BookCover bookData={bookData[i]} key={i} userData={userData} />
+      );
       // bookArray.push(newBook)
       bookRow.push(newBook);
       if (bookRow.length === 6) {
@@ -49,7 +52,7 @@ function BookContainer() {
   };
   return (
     <>
-      <div id='book-container'>
+      <div id="book-container">
         <Header />
         <CreateBookButton toggleCreateModal={openModal} />
         <CreateBookModal
