@@ -3,12 +3,12 @@ import Modal from './Modal';
 import BookCard from './BookCard.jsx';
 
 const SearchResults = (props) => {
-  for (let i = 0; i < props.results.length; i++) {
+  for (let i = 0; i < props.books.length; i++) {
     const books = [];
     const bookData = {
-      author: books[i].author,
-      title: books[i].title,
-      pictureURL: books[i].pictureURL,
+      author: props.books[i].author,
+      title: props.books[i].title,
+      pictureURL: props.books[i].pictureURL,
     };
     books.push(<BookCard bookData={bookData} />);
   }
