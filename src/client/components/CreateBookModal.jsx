@@ -48,12 +48,14 @@ function CreateBookModal(props) {
   function bookSearch(e) {
     e.preventDefault;
     const userInput = document.querySelector('#title').value;
-    fetch('/books', {
+    const url = userInput.replace(' ', '+');
+    // console.log(JSON.stringify({ inputPlus }));
+    fetch('http://localhost:3000/books', {
       method: 'POST',
       headers: { 'Content-Type': 'Application/JSON' },
-      body: JSON.stringify(userInput),
+      body: JSON.stringify({ url }),
     })
-      .then((res) => res.json())
+      // .then((res) => res.json())
       .then((res) => console.log(res));
   }
 
