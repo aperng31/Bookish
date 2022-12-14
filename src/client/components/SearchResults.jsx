@@ -12,7 +12,11 @@ const SearchResults = (props) => {
     };
     books.push(<BookCard bookData={bookData} />);
   }
-  return <div className='SearchResults'>{books}</div>;
+  return (
+    <Modal>
+      <div className='SearchResults'>{books}</div>
+    </Modal>
+  );
 };
 
 export default SearchResults;
