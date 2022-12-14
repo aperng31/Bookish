@@ -1,8 +1,9 @@
 import React from 'react';
 import '../styles/books.scss';
 import Modal from 'react-modal';
+import BookInfoModal from './BookInfoModal';
 
-function CreateBookModal(props) {
+function CreateBookInfoModal(props) {
   let subtitle;
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
@@ -27,8 +28,8 @@ function CreateBookModal(props) {
   function createBookReq() {
     const body = {
       author,
-      title,
-      genre,
+      name: title,
+      genre_name: genre,
       user_id: props.userData.user_id,
     };
     console.log(body);
@@ -58,36 +59,9 @@ function CreateBookModal(props) {
       contentLabel="Add Book"
       // createBook={ createBook }
     >
-      <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-      <button onClick={props.closeModal}>Cancel</button>
-      <div>Add Book</div>
-      <form>
-        <input
-          type="text"
-          placeholder="Title"
-          onChange={(e) => newTitle(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Author"
-          onChange={(e) => newAuthor(e.target.value)}
-        />
-        <div className="">
-          <select onChange={(e) => newGenre(e.target.value)}>
-            <option value="none" selected disabled hidden>
-              Select an Genre
-            </option>
-            <option value="thriller">Thriller</option>
-            <option value="fantasy">Fantasy</option>
-            <option value="horror">Horror</option>
-            <option value="mystery">Mystery</option>
-            <option value="contemporary">Contemporary</option>
-          </select>
-        </div>
-      </form>
-      <button onClick={() => createBookReq()}>Add Book</button>
+      <BookInfoModal />
     </Modal>
   );
 }
 
-export default CreateBookModal;
+export default CreateBookInfoModal;
