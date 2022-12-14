@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const cors = require('cors');
 
 const PORT = 3000;
 
@@ -16,6 +17,7 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 
 //USERS
 //input (req.body) --> username and passsword
+app.use(cors());
 
 app.post(
   '/login',
@@ -61,7 +63,7 @@ app.get('/books', (req, res) => {
 });
 
 app.post('/books', bookController.findBook, (req, res) => {
-  res.status(200).send(res.locals.data);
+  res.status(200).json(res.locals.data);
 });
 
 // original post request
