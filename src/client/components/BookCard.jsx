@@ -1,27 +1,27 @@
-import React from 'react'
+import React from 'react';
 
 function BookCard(props) {
   console.log('props', props);
 
-  const [regularDisplayState, toggleDisplay] = React.useState('block')
-  const [updateDisplayState, toggleUpdate] = React.useState('none')
+  const [regularDisplayState, toggleDisplay] = React.useState('block');
+  const [updateDisplayState, toggleUpdate] = React.useState('none');
 
-  const [newUpdatedAuthor, newAuthor] = React.useState(props.bookData.author)
-  const [newUpdatedTitle, newTitle] = React.useState(props.bookData.name)
-  const [newUpdatedGenre, newGenre] = React.useState(props.bookData.genre_name)
+  const [newUpdatedAuthor, newAuthor] = React.useState(props.bookData.author);
+  const [newUpdatedTitle, newTitle] = React.useState(props.bookData.name);
+  const [newUpdatedGenre, newGenre] = React.useState(props.bookData.genre_name);
 
   function toggleUpdateDisplay() {
     //render update input
     if (regularDisplayState === 'block') {
-      toggleDisplay('none')
-      toggleUpdate('block')
+      toggleDisplay('none');
+      toggleUpdate('block');
     } else {
       //if 'cancel' is clicked
-      newAuthor(props.bookData.author) //reset default values to original bookData
-      newTitle(props.bookData.name)
-      newGenre(props.bookData.genre_name)
-      toggleDisplay('block')
-      toggleUpdate('none')
+      newAuthor(props.bookData.author); //reset default values to original bookData
+      newTitle(props.bookData.name);
+      newGenre(props.bookData.genre_name);
+      toggleDisplay('block');
+      toggleUpdate('none');
     }
   }
 
@@ -29,39 +29,46 @@ function BookCard(props) {
     // console.log(props.bookData._id)
     const body = {
       book_id: props.bookData._id,
-      name: newUpdatedTitle, 
-      author: newUpdatedAuthor, 
-      genre_name: newUpdatedGenre, 
-      user_id: props.userData.user_id
-    }
+      name: newUpdatedTitle,
+      author: newUpdatedAuthor,
+      genre_name: newUpdatedGenre,
+      user_id: props.userData.user_id,
+    };
     console.log(body);
     const options = {
       method: 'PATCH',
       headers: { 'Content-Type': 'Application/JSON' },
       body: JSON.stringify(body),
-    }
+    };
     // console.log('body in patch', body)
     fetch('/books', options)
-    .then(res => res.json())
-    .then((res) => {
-      // console.log(res);
-      props.setBooks(res);
-      toggleUpdateDisplay() //on successful update, re-update Redux and set to non-update display
-    })
+      .then((res) => res.json())
+      .then((res) => {
+        // console.log(res);
+        props.setBooks(res);
+        toggleUpdateDisplay(); //on successful update, re-update Redux and set to non-update display
+      });
   }
 
   function deleteBook() {
     // console.log(props);
-    const body = { user_id: props.userData.user_id, book_id: props.bookData._id }; // user_id props.bookData.book_id
-    const options = { method: 'DELETE', headers: { 'Content-Type': 'Application/JSON' }, body: JSON.stringify(body) };
+    const body = {
+      user_id: props.userData.user_id,
+      book_id: props.bookData._id,
+    }; // user_id props.bookData.book_id
+    const options = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'Application/JSON' },
+      body: JSON.stringify(body),
+    };
     // console.log(body);
     fetch('/books', options)
-    .then(res => res.json())
-    .then(res => {
-      // console.log(res);
-      props.setBooks(res)
-      //close modal, redirect to home page to re-fetch data
-    })
+      .then((res) => res.json())
+      .then((res) => {
+        // console.log(res);
+        props.setBooks(res);
+        //close modal, redirect to home page to re-fetch data
+      });
   }
   return (
     <div className="book-card book">
@@ -134,7 +141,7 @@ function BookCard(props) {
 
       <button onClick={() => deleteBook()}>Delete Book</button>
     </div>
-  )
+  );
 }
 
-export default BookCard
+export default BookCard;
