@@ -46,35 +46,53 @@ bookController.getUserBooks = (req, res, next) => {
     });
 };
 
-bookController.findBook = async (req, res, next) => {
+bookController.findBook = (req, res, next) => {
   // req.body.url ==== "the+lord+of+the+rings"
   // fetch url = "http://openlibrary.org/search.json?q="
   // add the string from req.body into our url for the fetch request
 
   const urlString = `http://openlibrary.org/search.json?q=${req.body.url}`;
+  fetch(urlString)
+    .then((response) => response.json())
+    .then((data) => {
+      const bookArray = data.docs;
+      let pictureURL;
+      const resultArray = bookArray.map((obj) => {
+        let id;
+        if (obj.isbn && typeof obj.isbn === 'String') {
+          id = obj.isbn;
+          pictureURL = `https://covers.openlibrary.org/b/isbn/${id}-M.jpg`;
+        } else if (obj.isbn && Array.isArray(obj.isbn)) {
+          id = obj.isbn[0];
+          pictureURL = `https://covers.openlibrary.org/b/isbn/${id}-M.jpg`;
+        } else if (obj.cover_i && typeof obj.cover_i === 'String') {
+          id = obj.cover_i;
+          pictureURL = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
+        } else if (obj.cover_i && Array.isArray(obj.cover_i)) {
+          id = obj.cover_i[0];
+          pictureURL = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
+        } else {
+          pictureURL = 'NO PICTURE';
+        }
+        const title = obj.title;
+        // const author = obj.author_name
+        let author;
+        if (Array.isArray(obj.author_name)) {
+          author = obj.author_name[0];
+        } else {
+          author = obj.author_name;
+        }
 
-  try {
-    // make the fetch request to open library
-    const respond = await fetch(urlString);
-    const data = await respond.json();
-    console.log('DATA FROM OL: ', data);
-    const bookArray = data.docs;
-    //
-    return bookArray.map((obj) => {
-      const coverID = obj.cover_i;
-      const title = obj.title;
-      const author = obj.author_name[0];
-      const pictureURL = `https://covers.openlibrary.org/b/id/${coverID}-S.jpg`;
-      console.log('DATA INSIDE MAP: ', coverID, title, author, pictureURL);
+        // console.log('DATA INSIDE MAP: ', coverID, title, author, pictureURL);
+        return {
+          title,
+          author,
+          pictureURL,
+        };
+      });
+      res.locals.data = resultArray;
+      return next();
     });
-
-    return next();
-  } catch (err) {
-    return next({
-      log: 'error fetching data from the API',
-      message: { error: err },
-    });
-  }
 };
 
 // original code
