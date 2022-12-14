@@ -62,6 +62,10 @@ app.get('/books', (req, res) => {
   res.status(202).send('store data in res.locals and end back to frontend');
 });
 
+// app.post('/books/add', bookController.addBook, (req, res) => {
+//   res.status(200).json();
+// });
+
 app.post('/books', bookController.findBook, (req, res) => {
   res.status(200).json(res.locals.data);
 });
