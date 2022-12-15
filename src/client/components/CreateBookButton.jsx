@@ -1,7 +1,7 @@
-import React from 'react';
-import Icon from '@mdi/react';
-import addIcon from '../icons/add.png';
-import { mdiBookPlusOutline } from '@mdi/js';
+import React from 'react'
+import Icon from '@mdi/react'
+import addIcon from '../icons/add.png'
+import { mdiBookPlusOutline } from '@mdi/js'
 // import { useSelector, useDispatch } from 'react-redux'
 // import { getBooks, createBook, updateBook, deleteBook } from '../redux/counterSlice'
 
@@ -19,7 +19,7 @@ function CreateBookButton(props) {
         />
       </div>
     </div>
-  );
+  )
 }
 
-export default CreateBookButton;
+export default CreateBookButton

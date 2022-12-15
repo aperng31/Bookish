@@ -1,17 +1,24 @@
 @import 'variables';
 
+$dark-green: #6a775a;
+
 #book-container {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 100px;
-}
-
-#add-book {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-family: 'Cormorant', serif;
+  color: $dark-green;
+  font-size: 2.2rem;
+  #add-book {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      width: 2.5rem !important;
+      height: 2.5rem !important;
+    }
+  }
 }
 
 #add-book:hover {
