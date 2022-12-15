@@ -4,7 +4,23 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 20px;
+  justify-content: center;
+  gap: 100px;
+}
+
+#add-book {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#add-book:hover {
+  cursor: pointer;
+}
+
+svg:hover {
+  transform: scale(1.5);
+  transition: 0.3s;
 }
 
 .book-card {
