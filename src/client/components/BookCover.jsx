@@ -10,13 +10,11 @@ function BookCover(props) {
     setIsOpen(!isOpen);
   };
 
+  //https://covers.openlibrary.org/b/id/${props.bookData.cover_i}-M.jpg`
+
   return (
     <div className="book-card-cover">
-      <img
-        onClick={handleImgClick}
-        src="https://covers.openlibrary.org/b/id/12059372-M.jpg"
-        alt="book cover"
-      />
+      <img onClick={handleImgClick} src={props.bookData.pictureurl} />
       {isOpen && <BookInfoModal setIsOpen={setIsOpen} props={props} />}
     </div>
   );
