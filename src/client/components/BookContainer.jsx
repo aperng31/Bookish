@@ -25,10 +25,9 @@ function BookContainer() {
 
   //This method takes a flat array and turns it into an array of book row arrays
   //with each book row array containing upto 6 book cards.
-
+  const bookData = useSelector((state) => state.book.bookData);
+  const userData = useSelector((state) => state.user);
   const renderBooks = () => {
-    const bookData = useSelector((state) => state.book.bookData);
-    const userData = useSelector((state) => state.user);
     const bookArray = [];
 
     let bookRow = [];
@@ -46,14 +45,14 @@ function BookContainer() {
         bookArray.push(bookRow);
       }
     }
-    return bookArray.map((bookRow) => {
-      return <BookShelf bookRow={bookRow} />;
+    return bookArray.map((bookRow, index) => {
+      return <BookShelf bookRow={bookRow} key={index} />;
     });
   };
   return (
     <>
       <div id="book-container">
-        <Header />
+        <Header userData={userData} bookData={bookData} />
         <CreateBookButton toggleCreateModal={openModal} />
         <CreateBookModal
           createBookModal={createBookModal}
