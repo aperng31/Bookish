@@ -61,20 +61,27 @@ bookController.findBook = (req, res, next) => {
       let pictureURL;
       const resultArray = bookArray.map((obj) => {
         let id;
-        if (obj.isbn && typeof obj.isbn === 'String') {
-          id = obj.isbn;
-          pictureURL = `https://covers.openlibrary.org/b/isbn/${id}-M.jpg`;
-        } else if (obj.isbn && Array.isArray(obj.isbn)) {
-          id = obj.isbn[0];
-          pictureURL = `https://covers.openlibrary.org/b/isbn/${id}-M.jpg`;
-        } else if (obj.cover_i && typeof obj.cover_i === 'String') {
+        // if (obj.isbn && typeof obj.isbn === 'String') {
+        //   id = obj.isbn;
+        //   pictureURL = `https://covers.openlibrary.org/b/isbn/${id}-M.jpg`;
+        // } else if (obj.isbn && Array.isArray(obj.isbn)) {
+        //   id = obj.isbn[0];
+        //   pictureURL = `https://covers.openlibrary.org/b/isbn/${id}-M.jpg`;
+        // } else if (obj.cover_i && typeof obj.cover_i === 'String') {
+        //   id = obj.cover_i;
+        //   pictureURL = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
+        // } else if (obj.cover_i && Array.isArray(obj.cover_i)) {
+        //   id = obj.cover_i[0];
+        //   pictureURL = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
+        // } else {
+        //   pictureURL = 'NO PICTURE';
+        // }
+
+        if (obj.cover_i) {
           id = obj.cover_i;
           pictureURL = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
-        } else if (obj.cover_i && Array.isArray(obj.cover_i)) {
-          id = obj.cover_i[0];
-          pictureURL = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
         } else {
-          pictureURL = 'NO PICTURE';
+          pictureURL = 'http://lgimages.s3.amazonaws.com/nc-sm.gif';
         }
         const title = obj.title;
         // const author = obj.author_name
