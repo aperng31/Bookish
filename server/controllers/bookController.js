@@ -17,20 +17,18 @@ bookController.getAllBooks = (req, res, next) => {
 bookController.getUserBooks = (req, res, next) => {
   // write code here
   //Should have this for either when someone logs in or when someone enters a new entry
-  console.log('we are in getUserBooks: ', res.locals.user._id);
-  const id = [res.locals.user._id];
+  console.log('we are in getUserBooks: ', res.locals.user.user_id);
+  const id = [res.locals.user.user_id];
 
   //this should get all the entries of books where c.book_id = b._ID and u._id = c.user_ID when u._id = entry
-  const mySQL =
-    //this should get all the books without genre
-    'SELECT b.* FROM books b INNER JOIN catalog c on c.book_id = b._id INNER JOIN users u on u._id = c.user_id WHERE u._id = $1';
-  //This might work to get the genre as well as the book id?
-  const mySQL2 =
-    // 'SELECT b.*, g.genre AS genre_name FROM books b INNER JOIN catalog c ON c.book_id = b._id INNER JOIN genre g ON g._id = b.genre INNER JOIN users u ON u._id = c.user_id WHERE u._id = $1';
-    'SELECT b.*, g.genre AS genre_name FROM books b INNER JOIN genre g ON b.genre = g._id INNER JOIN catalog c ON c.book_id = b._id WHERE c.user_id = $1;';
-  // const diffSQL = 'SELECT p.name AS Character, s.name FROM public.people p LEFT OUTER JOIN public.species s ON p.species_id = s._id';
-  db.query(mySQL2, id)
+
+  //SELECT * FROM "public"."books" LIMIT 100
+  // SELECT * from books WHERE books.user_id = $1
+  const mySQL = 'SELECT * FROM books WHERE books.user_id = $1';
+
+  db.query(mySQL, id)
     .then((data) => {
+      console.log('This is the data from getUserBooks: ', data);
       // console.log('query successful, here is data: ', data.rows);
       res.locals.userBooks = data.rows ? data.rows : [];
       return next();
@@ -95,6 +93,7 @@ bookController.findBook = (req, res, next) => {
         };
       });
       res.locals.data = resultArray;
+      // pass user_id along with res.locals
       return next();
     });
 };
@@ -173,9 +172,9 @@ bookController.findGenre = (req, res, next) => {
 
 //output: {_id, name, author, genre_id}
 bookController.createBook = (req, res, next) => {
-  if (res.locals.foundBook) {
-    return next();
-  }
+  // if (res.locals.foundBook) {
+  //   return next();
+  // }
 
   // res.locals initialEntry [ title/name, author, genre(STRING), user_id]
   //id = [title/name, author, genre(STRING), user_id, genre._id]
