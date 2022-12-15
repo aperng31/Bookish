@@ -123,13 +123,6 @@ button {
   margin-top: 30px;
 }
 
-.results {
-  position: fixed;
-  display: flex;
-  padding: 10px;
-  margin: none;
-}
-
 .SearchResult {
   // border: 1px solid black;
   font-size: 14px;
@@ -141,4 +134,47 @@ button {
     border-radius: 1rem;
     height: 200px;
   }
+}
+
+// .input-style {
+//   width: 500px;
+//   border: none;
+//   border-radius: 1rem;
+//   padding: 10px;
+//   margin-top: 20px;
+// }
+
+.search-modal-content {
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  label {
+    margin-left: 20px;
+  }
+  .button-wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+  button {
+    width: 200px;
+    margin-right: 20px;
+    margin-top: 30px;
+  }
+  input {
+    flex-grow: 1;
+    border: none;
+    width: 400px;
+    padding: 12px;
+    border-radius: 3rem;
+    margin-top: 30px;
+  }
+}
+
+.results {
+  display: flex;
+  padding: 10px;
+  margin-top: 60px;
+  // WRAPPED THE RESULTS
+  flex-wrap: wrap;
 }

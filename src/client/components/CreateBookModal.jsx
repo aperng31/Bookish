@@ -1,20 +1,21 @@
-import React from 'react';
-import '../styles/books.scss';
-import Modal from 'react-modal';
-import SearchResult from './SearchResult';
+import React from 'react'
+import '../styles/books.scss'
+import Modal from 'react-modal'
+import SearchResult from './SearchResult'
 
 function CreateBookModal(props) {
-  let subtitle;
+  let subtitle
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
-    subtitle.style.color = '#f00';
+    subtitle.style.color = '#f00'
   }
   const customStyles = {
     content: {
-      background: 'rgba(22, 22, 23, 0.7)',
       padding: '100px',
-      // display: 'flex',
-      // flex_direction: 'column',
+      alignItems: 'center',
+      width: '1000px',
+      height: '1000px',
+      background: 'rgba(22, 22, 23, 0.7)',
       borderRadius: '1rem',
       fontFamily: '"Courier New", Courier, monospace',
       color: 'white',
@@ -28,13 +29,14 @@ function CreateBookModal(props) {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
     },
-  };
-  Modal.setAppElement('#root');
+  }
 
-  const [author, newAuthor] = React.useState('');
-  const [title, newTitle] = React.useState('');
-  const [genre, newGenre] = React.useState('');
-  const [books, setBooks] = React.useState([]);
+  Modal.setAppElement('#root')
+
+  const [author, newAuthor] = React.useState('')
+  const [title, newTitle] = React.useState('')
+  const [genre, newGenre] = React.useState('')
+  const [books, setBooks] = React.useState([])
 
   // function createBookReq() {
   //   // const body = { author, name: title, genre_name: genre, user_id: props.userData.user_id };
@@ -57,10 +59,11 @@ function CreateBookModal(props) {
   //     .catch((err) => {});
   // }
   function bookSearch(e) {
-    e.preventDefault;
-    const userInput = document.querySelector('#title').value;
-    const url = userInput.replaceAll(' ', '+');
-    console.log(JSON.stringify({ url }));
+    // e.preventDefault needs to be invoked
+    e.preventDefault()
+    const userInput = document.querySelector('#title').value
+    const url = userInput.replaceAll(' ', '+')
+    console.log(JSON.stringify({ url }))
     fetch('http://localhost:3000/books', {
       method: 'POST',
       headers: { 'Content-Type': 'Application/JSON' },
@@ -68,14 +71,16 @@ function CreateBookModal(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        console.log(data)
         const bookSearchResult = data.map((books, index) => {
           const bookData = {
             author: data[index].author,
             title: data[index].title,
             pictureURL: data[index].pictureURL,
-          };
-          if (index < 5) {
+          }
+          // if (index < 5) {
+          if (index < 20) {
+            // CHANGED IT TO SHOW MORE RESULTS !!!
             return (
               <SearchResult
                 closeModal={props.closeModal}
@@ -83,11 +88,11 @@ function CreateBookModal(props) {
                 bookData={bookData}
                 key={index}
               />
-            );
+            )
           }
-        });
-        setBooks(bookSearchResult);
-      });
+        })
+        setBooks(bookSearchResult)
+      })
   }
 
   return (
@@ -100,26 +105,33 @@ function CreateBookModal(props) {
       // createBook={ createBook }
     >
       {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2> */}
-      <label>Add Book</label>
-      <form>
-        <input
-          type="text"
-          id="title"
-          placeholder="Title"
-          onChange={(e) => newTitle(e.target.value)}
-        />
-        <div id="wrapper">
-          <div className="results">{books}</div>
-        </div>
-        {/* <input
+      <div className="search-modal-content">
+        <label>Add Book</label>
+        {/* ADDED THE BOOK SEARCH CALLBACK TO FIRE ON SUBMIT OF THE FORM
+         SO THAT YOU CAN PRESS ENTER 
+         OR CLICK THE SEARCH BUTTON TO FIRE THE FETCH REQUEST*/}
+        <form onSubmit={bookSearch}>
+          <input
+            className="input-style"
+            type="text"
+            id="title"
+            placeholder="Title"
+            onChange={(e) => newTitle(e.target.value)}
+          />
+          <div className="button-wrapper">
+            {/* CHANGED THE CALLBACK FUNCTION TO FIRE ON SUBMIT BY CHANGING TYPE TO SUBMIT */}
+            <button type="submit">Search</button>
+            <button onClick={props.closeModal}>Cancel</button>
+          </div>
+          {/* <input
           type='text'
           placeholder='Author'
           onChange={(e) => newAuthor(e.target.value)}
         /> */}
-        {/* <div className=''> */}
-        {/* <select onChange={(e) => newGenre(e.target.value)}>
+          {/* <div className=''> */}
+          {/* <select onChange={(e) => newGenre(e.target.value)}>
             <option value='none' selected disabled hidden>
-              Select an Genre
+            Select an Genre
             </option>
             <option value='thriller'>Thriller</option>
             <option value='fantasy'>Fantasy</option>
@@ -127,12 +139,12 @@ function CreateBookModal(props) {
             <option value='mystery'>Mystery</option>
             <option value='contemporary'>Contemporary</option>
           </select> */}
-        {/* </div> */}
-      </form>
-      <button onClick={bookSearch}>Search</button>
-      <button onClick={props.closeModal}>Cancel</button>
+          {/* </div> */}
+        </form>
+        <div className="results">{books}</div>
+      </div>
     </Modal>
-  );
+  )
 }
 
-export default CreateBookModal;
+export default CreateBookModal
