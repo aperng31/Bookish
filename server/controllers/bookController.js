@@ -48,9 +48,9 @@ bookController.getUserBooks = (req, res, next) => {
 bookController.addBook = (req, res, next) => {
   // console.log(req.body)
   const { book } = req.body
-  const userId = 1
-  // const valArr = [book.title, book.author, book.pictureURL, book.user_id]
-  const valArr = [book.title, book.author, book.pictureURL, userId]
+  // const userId = 1
+  const valArr = [book.title, book.author, book.pictureURL, book.user_id]
+  // const valArr = [book.title, book.author, book.pictureURL, userId]
   const addBookQuery =
     'INSERT INTO books(title, author, pictureURL, user_id) VALUES ($1, $2, $3, $4)'
   db.query(addBookQuery, valArr)
