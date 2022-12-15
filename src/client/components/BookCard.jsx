@@ -9,9 +9,29 @@ function BookCard(props) {
   const [readBook, setReadBook] = React.useState(
     props.props.props.bookData.read
   );
-  const [deletedBook, setDeletedBook] = React.useState(false);
 
-  useEffect(() => {
+  const deleteBook = () => {
+    const body = {
+      user_id: props.props.props.bookData.user_id,
+      book_id: props.props.props.bookData.book_id,
+    }; // user_id props.bookData.book_id
+    const options = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'Application/JSON' },
+      body: JSON.stringify(body),
+    };
+    console.log(body);
+    fetch('/books', options)
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        props.setBooks(res);
+        //close modal, redirect to home page to re-fetch data
+      });
+  };
+
+  const updateBook = () => {
+    console.log('updateBook clicked');
     const body = {
       user_id: props.props.props.bookData.user_id,
       book_id: props.props.props.bookData.book_id,
@@ -27,34 +47,6 @@ function BookCard(props) {
       .then((res) => {
         props.setBooks(res);
       });
-  }, [readBook]);
-
-  useEffect(() => {
-    const body = {
-      user_id: props.props.props.bookData.user_id,
-      book_id: props.props.props.bookData.book_id,
-    }; // user_id props.bookData.book_id
-    const options = {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'Application/JSON' },
-      body: JSON.stringify(body),
-    };
-    // console.log(body);
-    fetch('/books', options)
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        props.setBooks(res);
-        //close modal, redirect to home page to re-fetch data
-      });
-  }, [deletedBook]);
-
-  const deleteBook = () => {
-    setDeletedBook(true);
-  };
-
-  const updateBook = () => {
-    setReadBook(true);
   };
 
   return (
