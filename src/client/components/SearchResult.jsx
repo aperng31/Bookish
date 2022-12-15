@@ -6,7 +6,11 @@ import '../styles/books.scss';
 
 const SearchResult = (props) => {
   const userData = useSelector((state) => state.user);
+<<<<<<< HEAD
   const dispatch = useDispatch();
+=======
+  console.log(props);
+>>>>>>> dev
 
   function addBook(e) {
     e.preventDefault();
@@ -20,6 +24,7 @@ const SearchResult = (props) => {
       method: 'POST',
       headers: { 'Content-Type': 'Application/JSON' },
       body: JSON.stringify({ book }),
+<<<<<<< HEAD
     })
       .then((res) => res.json())
       .then((data) => {
@@ -27,6 +32,10 @@ const SearchResult = (props) => {
         dispatch(setBooks(data));
       })
       .then(() => props.closeModal());
+=======
+    }).then(() => props.closeModal());
+    // props.setBooks();
+>>>>>>> dev
   }
 
   return (
