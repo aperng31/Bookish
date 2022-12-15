@@ -5,6 +5,7 @@ import '../styles/books.scss';
 
 const SearchResult = (props) => {
   const userData = useSelector((state) => state.user);
+  console.log(props);
 
   function addBook(e) {
     e.preventDefault();
@@ -12,14 +13,14 @@ const SearchResult = (props) => {
       title: props.bookData.title,
       author: props.bookData.author,
       pictureURL: props.bookData.pictureURL,
-      user_id: props.user_id,
+      user_id: props.userID.user_id,
     };
     fetch('http://localhost:3000/books/add', {
       method: 'POST',
       headers: { 'Content-Type': 'Application/JSON' },
       body: JSON.stringify({ book }),
     }).then(() => props.closeModal());
-    props.setBooks();
+    // props.setBooks();
   }
 
   return (
