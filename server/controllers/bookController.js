@@ -48,8 +48,9 @@ bookController.getUserBooks = (req, res, next) => {
 bookController.addBook = (req, res, next) => {
   // console.log(req.body)
   const { book } = req.body
-  const userId = 1
-  const valArr = [book.title, book.author, book.pictureURL, userId]
+  // const userId = 1
+  const valArr = [book.title, book.author, book.pictureURL, book.user_id]
+  // const valArr = [book.title, book.author, book.pictureURL, userId]
   const addBookQuery =
     'INSERT INTO books(title, author, pictureURL, user_id) VALUES ($1, $2, $3, $4)'
   db.query(addBookQuery, valArr)
@@ -81,9 +82,7 @@ bookController.findBook = (req, res, next) => {
       const bookArray = data.docs
       let pictureURL
       const resultArray = bookArray.map((obj) => {
-
-
-        let id;
+        let id
         // if (obj.isbn && typeof obj.isbn === 'String') {
         //   id = obj.isbn;
         //   pictureURL = `https://covers.openlibrary.org/b/isbn/${id}-M.jpg`;
@@ -101,10 +100,10 @@ bookController.findBook = (req, res, next) => {
         // }
 
         if (obj.cover_i) {
-          id = obj.cover_i;
-          pictureURL = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
+          id = obj.cover_i
+          pictureURL = `https://covers.openlibrary.org/b/id/${id}-M.jpg`
         } else {
-          pictureURL = 'http://lgimages.s3.amazonaws.com/nc-sm.gif';
+          pictureURL = 'http://lgimages.s3.amazonaws.com/nc-sm.gif'
         }
         const title = obj.title
         // const author = obj.author_name
@@ -233,6 +232,38 @@ bookController.createBook = (req, res, next) => {
     })
 }
 
+// bookController.deleteBook = (req, res, next) => {
+//   console.log(req.body)
+//   //INFO NEEDED [book_id, name, author, genre_id, user_id]
+//   // const id = [book_id, user_id]
+//   // res.locals.user = { _id: user_id }
+//   const { book_id, user_id } = req.body
+//   const deleteQuery = 'DELETE FROM books WHERE book_id=$1'
+//   // const mySQL = 'DELETE FROM catalog c WHERE c.user_id = $2 AND c.book_id = $1'
+//   db.query(deleteQuery, [book_id])
+//     .then(() => {
+//       return next()
+//     })
+//     .catch((err) => {
+//       console.log(err)
+//     })
+// }
+
+bookController.deleteBook = (req, res, next) => {
+  console.log(req.body)
+  const { book_id, user_id } = req.body
+  const queryData = [book_id, user_id]
+  const deleteQuery =
+    'DELETE FROM books WHERE books.book_id=$1 and books.user_id=$2'
+  db.query(deleteQuery, queryData)
+    .then(() => {
+      return next()
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
 //We need user_id for this
 // res.locals initialEntry [title/name, author, genre(STRING), user_id]
 //id = [title/name, author, genre(STRING), user_id, bookEntryID._id]
@@ -263,17 +294,6 @@ bookController.createCatalogEntry = (req, res, next) => {
         },
       })
     })
-}
-
-bookController.deleteBook = (req, res, next) => {
-  //INFO NEEDED [book_id, name, author, genre_id, user_id]
-  const { book_id, user_id } = req.body
-  const id = [book_id, user_id]
-  res.locals.user = { _id: user_id }
-  const mySQL = 'DELETE FROM catalog c WHERE c.user_id = $2 AND c.book_id = $1'
-  db.query(mySQL, id).then(() => {
-    return next()
-  })
 }
 
 bookController.editBook = (req, res, next) => {
