@@ -79,7 +79,7 @@ bookController.findBook = (req, res, next) => {
 
         if (obj.cover_i) {
           id = obj.cover_i;
-          pictureURL = `https://covers.openlibrary.org/b/isbn/${id}-M.jpg`;
+          pictureURL = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
         } else {
           pictureURL = 'http://lgimages.s3.amazonaws.com/nc-sm.gif';
         }
