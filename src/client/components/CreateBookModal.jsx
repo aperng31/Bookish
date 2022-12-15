@@ -11,6 +11,16 @@ function CreateBookModal(props) {
   }
   const customStyles = {
     content: {
+      background: 'rgba(22, 22, 23, 0.7)',
+      padding: '100px',
+      // display: 'flex',
+      // flex_direction: 'column',
+      borderRadius: '1rem',
+      fontFamily: '"Courier New", Courier, monospace',
+      color: 'white',
+      fontSize: '25px',
+      boxShadow:
+        'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px',
       top: '50%',
       left: '50%',
       right: 'auto',
@@ -24,6 +34,7 @@ function CreateBookModal(props) {
   const [author, newAuthor] = React.useState('');
   const [title, newTitle] = React.useState('');
   const [genre, newGenre] = React.useState('');
+  const [books, setBooks] = React.useState([]);
 
   // function createBookReq() {
   //   // const body = { author, name: title, genre_name: genre, user_id: props.userData.user_id };
@@ -58,19 +69,25 @@ function CreateBookModal(props) {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        const bookSearchResult = data.map((books, index) => {
+          const bookData = {
+            author: data[index].author,
+            title: data[index].title,
+            pictureURL: data[index].pictureURL,
+          };
+          if (index < 5) {
+            return (
+              <SearchResult
+                closeModal={props.closeModal}
+                setBooks={props.setBooks}
+                bookData={bookData}
+                key={index}
+              />
+            );
+          }
+        });
+        setBooks(bookSearchResult);
       });
-    // .then((data) => {
-    //   for (let i = 0; i < 8; i++) {
-    //     const books = [];
-    //     const bookData = {
-    //       author: data[i].author,
-    //       title: data[i].title,
-    //       pictureURL: data[i].pictureURL,
-    //     };
-    //     books.push(<SearchResult bookData={bookData} />);
-    //     return books;
-    //   }
-    // });
   }
 
   return (
@@ -82,8 +99,8 @@ function CreateBookModal(props) {
       contentLabel='Add Book'
       // createBook={ createBook }
     >
-      <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-      <div>Add Book</div>
+      {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2> */}
+      <label>Add Book</label>
       <form>
         <input
           type='text'
@@ -91,16 +108,16 @@ function CreateBookModal(props) {
           placeholder='Title'
           onChange={(e) => newTitle(e.target.value)}
         />
-        <button type='button' onClick={bookSearch}>
-          Search
-        </button>
+        <div id='wrapper'>
+          <div className='results'>{books}</div>
+        </div>
         {/* <input
           type='text'
           placeholder='Author'
           onChange={(e) => newAuthor(e.target.value)}
         /> */}
-        <div className=''>
-          {/* <select onChange={(e) => newGenre(e.target.value)}>
+        {/* <div className=''> */}
+        {/* <select onChange={(e) => newGenre(e.target.value)}>
             <option value='none' selected disabled hidden>
               Select an Genre
             </option>
@@ -110,8 +127,9 @@ function CreateBookModal(props) {
             <option value='mystery'>Mystery</option>
             <option value='contemporary'>Contemporary</option>
           </select> */}
-        </div>
+        {/* </div> */}
       </form>
+      <button onClick={bookSearch}>Search</button>
       <button onClick={props.closeModal}>Cancel</button>
     </Modal>
   );
