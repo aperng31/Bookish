@@ -31,36 +31,11 @@ function BookCard(props) {
     }
   }
 
-  function updateBookReq() {
-    // console.log(props.bookData._id)
-    const body = {
-      book_id: props.props.props.bookData._id,
-      name: newUpdatedTitle,
-      author: newUpdatedAuthor,
-      genre_name: newUpdatedGenre,
-      user_id: props.props.props.userData.user_id,
-    };
-    console.log(body);
-    const options = {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'Application/JSON' },
-      body: JSON.stringify(body),
-    };
-    // console.log('body in patch', body)
-    fetch('/books', options)
-      .then((res) => res.json())
-      .then((res) => {
-        // console.log(res);
-        props.setBooks(res);
-        toggleUpdateDisplay(); //on successful update, re-update Redux and set to non-update display
-      });
-  }
-
   function deleteBook() {
     // console.log(props);
     const body = {
-      user_id: props.props.props.userData.user_id,
-      book_id: props.props.props.bookData._id,
+      user_id: props.props.props.bookData.user_id,
+      book_id: props.props.props.bookData.book_id,
     }; // user_id props.bookData.book_id
     const options = {
       method: 'DELETE',
@@ -85,11 +60,11 @@ function BookCard(props) {
         <span>
           Title:
           <span style={{ display: regularDisplayState }}>
-            {props.props.props.bookData.name}
+            {props.props.props.bookData.title}
           </span>
           <input
             type="text"
-            defaultValue={props.props.props.bookData.name}
+            defaultValue={props.props.props.bookData.title}
             style={{ display: updateDisplayState }}
             onChange={(e) => newTitle(e.target.value)}
           ></input>
@@ -109,31 +84,7 @@ function BookCard(props) {
           ></input>
         </span>
       </h4>
-      <h4>
-        <span>
-          Genre:
-          <span style={{ display: regularDisplayState }}>
-            {props.props.props.bookData.genre_name}
-          </span>
-          <div className="" style={{ display: updateDisplayState }}>
-            <select onChange={(e) => newGenre(e.target.value)}>
-              <option value="thriller">Thriller</option>
-              <option value="fantasy">Fantasy</option>
-              <option value="horror">Horror</option>
-              <option value="mystery">Mystery</option>
-              <option value="contemporary">Contemporary</option>
-            </select>
-          </div>
-        </span>
-      </h4>
       {/* <button onClick={() => props.moreInfo(props.book_id) }>More Info</button> */}
-
-      <button
-        onClick={() => toggleUpdateDisplay()}
-        style={{ display: regularDisplayState }}
-      >
-        Edit Book
-      </button>
 
       <button
         onClick={() => toggleUpdateDisplay()}

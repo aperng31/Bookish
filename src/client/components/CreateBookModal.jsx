@@ -96,20 +96,20 @@ function CreateBookModal(props) {
       onAfterOpen={afterOpenModal}
       onRequestClose={props.closeModal}
       style={customStyles}
-      contentLabel='Add Book'
+      contentLabel="Add Book"
       // createBook={ createBook }
     >
       {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2> */}
       <label>Add Book</label>
       <form>
         <input
-          type='text'
-          id='title'
-          placeholder='Title'
+          type="text"
+          id="title"
+          placeholder="Title"
           onChange={(e) => newTitle(e.target.value)}
         />
-        <div id='wrapper'>
-          <div className='results'>{books}</div>
+        <div id="wrapper">
+          <div className="results">{books}</div>
         </div>
         {/* <input
           type='text'
