@@ -1,35 +1,35 @@
-const express = require('express')
-const app = express()
-const path = require('path')
-const cors = require('cors')
+const express = require('express');
+const app = express();
+const path = require('path');
+const cors = require('cors');
 
-const PORT = 3000
+const PORT = 3000;
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-const userController = require('./controllers/userController')
-const bookController = require('./controllers/bookController')
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+const userController = require('./controllers/userController');
+const bookController = require('./controllers/bookController');
 
 //handling static files from public I hope...
-app.use(express.static(path.resolve(__dirname, '../public')))
+app.use(express.static(path.resolve(__dirname, '../public')));
 
 //Do we want to use routers or no?
 
 //USERS
 //input (req.body) --> username and passsword
-app.use(cors())
+app.use(cors());
 
 app.post(
   '/login',
   userController.findUser,
   bookController.getUserBooks,
   (req, res) => {
-    console.log('this user entries')
+    console.log('this user entries');
     res
       .status(200)
-      .send({ userBooks: res.locals.userBooks, user: res.locals.user })
-  },
-)
+      .send({ userBooks: res.locals.userBooks, user: res.locals.user });
+  }
+);
 
 //input:  req.body: name, username, password
 app.post(
@@ -38,21 +38,21 @@ app.post(
   userController.getUser,
   bookController.getUserBooks,
   (req, res) => {
-    console.log('this is createEntries')
+    console.log('this is createEntries');
     //maybe just send them somewhere instead
     res
       .status(200)
-      .send({ userBooks: res.locals.userBooks, user: res.locals.user })
-  },
-)
+      .send({ userBooks: res.locals.userBooks, user: res.locals.user });
+  }
+);
 
 //BOOKS
 //we don't need router for this because we only ever get book on login or creating new entry
 //we also need on delete AND EDIT WHICH I FORGOT ABOUT
-// app.get('/books', bookController.getUserBooks, (req, res) => {
-//   console.log('this is get UserBooks');
-//   res.status(200).send(res.locals.userBooks);
-// });
+app.get('/books/', bookController.getUserBooks, (req, res) => {
+  console.log('this is get UserBooks');
+  res.status(200).json(res.locals.userBooks);
+});
 
 //this should try to find a book, if not found: create an entry, and return the user's list of books
 //if found, skip to create catalog
@@ -62,13 +62,18 @@ app.post(
 //   res.status(202).send('store data in res.locals and end back to frontend');
 // });
 
-app.post('/books/add', bookController.addBook, (req, res) => {
-  res.status(200).json({ message: 'Success' })
-})
+app.post(
+  '/books/add',
+  bookController.addBook,
+  bookController.getUserBooks,
+  (req, res) => {
+    res.status(200).json(res.locals.userBooks);
+  }
+);
 
 app.post('/books', bookController.findBook, (req, res) => {
-  res.status(200).json(res.locals.data)
-})
+  res.status(200).json(res.locals.data);
+});
 
 // original post request
 // app.post(
@@ -89,12 +94,13 @@ app.post('/books', bookController.findBook, (req, res) => {
 app.delete(
   '/books',
   bookController.deleteBook,
+  bookController.getUserBooks,
   // bookController.getUserBooks,
   (req, res) => {
-    console.log('this is delete')
-    res.status(200).send(res.locals.userBooks)
-  },
-)
+    console.log('this is delete');
+    res.status(200).json(res.locals.userBooks);
+  }
+);
 
 app.patch(
   '/books',
@@ -102,32 +108,32 @@ app.patch(
   bookController.editBook,
   bookController.getUserBooks,
   (req, res) => {
-    console.log('this is edit')
-    res.status(200).send(res.locals.userBooks)
-  },
-)
+    console.log('this is edit');
+    res.status(200).send(res.locals.userBooks);
+  }
+);
 
 app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 500,
     message: { err: 'An error occurred' },
-  }
-  const errorObj = Object.assign({}, defaultErr, err)
-  console.log(errorObj.log)
-  return res.status(errorObj.status).json(errorObj.message)
-})
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
+});
 
 app.use((req, res, next) => {
-  console.error('Server.js 404')
-  return res.sendStatus(404)
-})
+  console.error('Server.js 404');
+  return res.sendStatus(404);
+});
 
 /**
  * start server
  */
 app.listen(PORT, () => {
-  console.log(`Server listening on port: ${PORT}...`)
-})
+  console.log(`Server listening on port: ${PORT}...`);
+});
 
-module.exports = app
+module.exports = app;

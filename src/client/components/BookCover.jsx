@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BookInfoModal from './BookInfoModal';
 
 function BookCover(props) {
-  console.log('props in book cover', props);
+  // console.log('props in book cover', props);
 
   const [isOpen, setIsOpen] = useState(false);
 

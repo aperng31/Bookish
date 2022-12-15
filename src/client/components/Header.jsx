@@ -12,7 +12,7 @@ import '../styles/books.scss';
 function Header(props) {
   const bookData = useSelector((state) => state.book.bookData);
   const userData = useSelector((state) => state.book.userData);
-  console.log('props in Header', props);
+  // console.log('props in Header', props);
   const temp = 'helloworld';
   return (
     <header>

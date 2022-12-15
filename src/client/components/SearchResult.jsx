@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setBooks } from '../redux/bookSlice';
 import Modal from './Modal';
 import '../styles/books.scss';
 
 const SearchResult = (props) => {
   const userData = useSelector((state) => state.user);
+<<<<<<< HEAD
+  const dispatch = useDispatch();
+=======
   console.log(props);
+>>>>>>> dev
 
   function addBook(e) {
     e.preventDefault();
@@ -19,12 +24,22 @@ const SearchResult = (props) => {
       method: 'POST',
       headers: { 'Content-Type': 'Application/JSON' },
       body: JSON.stringify({ book }),
+<<<<<<< HEAD
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log('data in search results', data);
+        dispatch(setBooks(data));
+      })
+      .then(() => props.closeModal());
+=======
     }).then(() => props.closeModal());
     // props.setBooks();
+>>>>>>> dev
   }
 
   return (
-    <div className='SearchResult'>
+    <div className="SearchResult">
       <img src={props.bookData.pictureURL} />
       <p>{props.bookData.title}</p>
       <p>{props.bookData.author}</p>
