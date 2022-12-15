@@ -55,3 +55,23 @@ button {
   filter: opacity(50%);
   margin-top: 30px;
 }
+
+.results {
+  position: fixed;
+  display: flex;
+  padding: 10px;
+  margin: none;
+}
+
+.SearchResult {
+  // border: 1px solid black;
+  font-size: 14px;
+  border-radius: 1rem;
+  width: 185px;
+  margin: 12px;
+  img {
+    margin: 3px;
+    border-radius: 1rem;
+    height: 200px;
+  }
+}
