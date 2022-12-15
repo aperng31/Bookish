@@ -1,9 +1,28 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Modal from './Modal';
+import '../styles/books.scss';
 
 const SearchResult = (props) => {
+  const userData = useSelector((state) => state.user);
+  // console.log(props);
+  // console.log(userData);
   function addBook(e) {
     e.preventDefault();
+    const book = {
+      title: props.bookData.title,
+      author: props.bookData.author,
+      pictureURL: props.bookData.pictureURL,
+      userID: userData.user_id,
+    };
+    fetch('http://localhost:3000/books/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'Application/JSON' },
+      body: JSON.stringify({ book }),
+    })
+      .then((res) => res.json())
+      .then((data) => props.setBooks(data))
+      .then(() => props.closeModal());
   }
 
   return (
