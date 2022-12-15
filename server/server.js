@@ -57,9 +57,13 @@ app.post(
 //this should try to find a book, if not found: create an entry, and return the user's list of books
 //if found, skip to create catalog
 
-app.get('/books', (req, res) => {
-  console.log('this is createEntries');
-  res.status(202).send('store data in res.locals and end back to frontend');
+// app.get('/books', (req, res) => {
+//   console.log('this is createEntries');
+//   res.status(202).send('store data in res.locals and end back to frontend');
+// });
+
+app.post('/books/add', bookController.addBook, (req, res) => {
+  res.status(200).json();
 });
 
 app.post('/books', bookController.findBook, (req, res) => {

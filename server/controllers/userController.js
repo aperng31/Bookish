@@ -10,13 +10,14 @@ userController.getAllUsers = () => {
 };
 
 userController.findUser = (req, res, next) => {
+  console.log(req.body);
   // write code here
   //[username, password]
   const { username, password } = req.body;
   const userLogin = [username, password];
   //assuming the req body will be in an array.
   const mySQL =
-    'SELECT u._id, u.name, u.username from users u WHERE u.username = $1 AND u.password = $2';
+    'SELECT u.user_id, u.name, u.username from users u WHERE u.username = $1 AND u.password = $2';
   db.query(mySQL, userLogin)
     .then((data) => {
       res.locals.user = data.rows[0];
@@ -64,6 +65,7 @@ userController.createUser = (req, res, next) => {
   // write code here
   //input - req.body --> [name, username, password]
   const user = Object.values(req.body);
+  console.log('user input: ', user);
   // bcrypt.genSalt(saltRounds, function (err, salt) {
   //   if (err) {
   //     return next(err);
@@ -97,7 +99,7 @@ userController.createUser = (req, res, next) => {
 userController.getUser = (req, res, next) => {
   const id = [res.locals.user[2]];
   const mySQL =
-    'SELECT u._id, u.name, u.username FROM users u WHERE u.password = $1';
+    'SELECT u.user_id, u.name, u.username FROM users u WHERE u.password = $1';
   db.query(mySQL, id)
     .then((data) => {
       res.locals.user = data.rows[0];
