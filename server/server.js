@@ -49,10 +49,10 @@ app.post(
 //BOOKS
 //we don't need router for this because we only ever get book on login or creating new entry
 //we also need on delete AND EDIT WHICH I FORGOT ABOUT
-// app.get('/books', bookController.getUserBooks, (req, res) => {
-//   console.log('this is get UserBooks');
-//   res.status(200).send(res.locals.userBooks);
-// });
+app.get('/books/', bookController.getUserBooks, (req, res) => {
+  console.log('this is get UserBooks');
+  res.status(200).json(res.locals.userBooks);
+});
 
 //this should try to find a book, if not found: create an entry, and return the user's list of books
 //if found, skip to create catalog
@@ -62,9 +62,14 @@ app.post(
 //   res.status(202).send('store data in res.locals and end back to frontend');
 // });
 
-app.post('/books/add', bookController.addBook, (req, res) => {
-  res.status(200).json({ message: 'Success' });
-});
+app.post(
+  '/books/add',
+  bookController.addBook,
+  bookController.getUserBooks,
+  (req, res) => {
+    res.status(200).json(res.locals.userBooks);
+  }
+);
 
 app.post('/books', bookController.findBook, (req, res) => {
   res.status(200).json(res.locals.data);
@@ -89,6 +94,7 @@ app.post('/books', bookController.findBook, (req, res) => {
 app.delete(
   '/books',
   bookController.deleteBook,
+  bookController.getUserBooks,
   // bookController.getUserBooks,
   (req, res) => {
     console.log('this is delete');

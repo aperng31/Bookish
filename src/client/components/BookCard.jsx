@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setBooks } from '../redux/bookSlice';
 
 function BookCard(props) {
-  console.log('props in BookCard', props);
-
   const [regularDisplayState, toggleDisplay] = React.useState('block');
   const [updateDisplayState, toggleUpdate] = React.useState('none');
 
@@ -10,7 +10,11 @@ function BookCard(props) {
     props.props.props.bookData.read
   );
 
+  const dispatch = useDispatch();
+  // console.log('props in bookcard ', props);
+
   const deleteBook = () => {
+    props.props.setIsOpen(false);
     const body = {
       user_id: props.props.props.bookData.user_id,
       book_id: props.props.props.bookData.book_id,
@@ -20,14 +24,17 @@ function BookCard(props) {
       headers: { 'Content-Type': 'Application/JSON' },
       body: JSON.stringify(body),
     };
-    console.log(body);
-    fetch('/books', options).then((res) => {
-      console.log('deleted book!');
-    });
+    console.log('body in delete fetch', body);
+    fetch('/books', options)
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log('data in bookcard', data);
+        dispatch(setBooks(data));
+      });
   };
 
   const updateBook = () => {
-    console.log('updateBook clicked');
+    // console.log('updateBook clicked');
     const body = {
       user_id: props.props.props.bookData.user_id,
       book_id: props.props.props.bookData.book_id,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setBooks } from '../redux/bookSlice';
 import BookCard from './BookCard.jsx';
@@ -10,6 +10,7 @@ import '../styles/books.scss';
 import Modal from 'react-modal';
 import BookShelf from './BookShelf';
 import '../stylesheets/bookcard.scss';
+
 function BookContainer() {
   const [createBookModal, toggleCreate] = React.useState(false);
   const [loginModal, toggleLogin] = React.useState(true);
@@ -27,6 +28,7 @@ function BookContainer() {
   //with each book row array containing upto 6 book cards.
   const bookData = useSelector((state) => state.book.bookData);
   const userData = useSelector((state) => state.user);
+
   const renderBooks = () => {
     const bookArray = [];
 
@@ -51,7 +53,7 @@ function BookContainer() {
   };
   return (
     <>
-      <div id='book-container'>
+      <div id="book-container">
         <Header userData={userData} bookData={bookData} />
         <CreateBookButton toggleCreateModal={openModal} />
         <CreateBookModal

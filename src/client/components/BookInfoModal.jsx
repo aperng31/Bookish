@@ -3,7 +3,7 @@ import BookCard from './BookCard';
 import '../stylesheets/bookModal.scss';
 
 const BookInfoModal = (props) => {
-  console.log('props in book info modal', props);
+  // console.log('props in book info modal', props);
   return (
     <div className="darkBG">
       <div className="centered">

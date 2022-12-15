@@ -63,7 +63,7 @@ function CreateBookModal(props) {
     e.preventDefault();
     const userInput = document.querySelector('#title').value;
     const url = userInput.replaceAll(' ', '+');
-    console.log(JSON.stringify({ url }));
+    // console.log(JSON.stringify({ url }));
     fetch('http://localhost:3000/books', {
       method: 'POST',
       headers: { 'Content-Type': 'Application/JSON' },
@@ -71,7 +71,6 @@ function CreateBookModal(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         const bookSearchResult = data.map((books, index) => {
           const bookData = {
             author: data[index].author,
@@ -86,6 +85,7 @@ function CreateBookModal(props) {
                 closeModal={props.closeModal}
                 setBooks={props.setBooks}
                 bookData={bookData}
+                userID={props.userData}
                 key={index}
               />
             );
@@ -101,26 +101,26 @@ function CreateBookModal(props) {
       onAfterOpen={afterOpenModal}
       onRequestClose={props.closeModal}
       style={customStyles}
-      contentLabel='Add Book'
+      contentLabel="Add Book"
       // createBook={ createBook }
     >
       {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2> */}
-      <div className='search-modal-content'>
+      <div className="search-modal-content">
         <label>Add Book</label>
         {/* ADDED THE BOOK SEARCH CALLBACK TO FIRE ON SUBMIT OF THE FORM
          SO THAT YOU CAN PRESS ENTER 
          OR CLICK THE SEARCH BUTTON TO FIRE THE FETCH REQUEST*/}
         <form onSubmit={bookSearch}>
           <input
-            className='input-style'
-            type='text'
-            id='title'
-            placeholder='Title'
+            className="input-style"
+            type="text"
+            id="title"
+            placeholder="Title"
             onChange={(e) => newTitle(e.target.value)}
           />
-          <div className='button-wrapper'>
+          <div className="button-wrapper">
             {/* CHANGED THE CALLBACK FUNCTION TO FIRE ON SUBMIT BY CHANGING TYPE TO SUBMIT */}
-            <button type='submit'>Search</button>
+            <button type="submit">Search</button>
             <button onClick={props.closeModal}>Cancel</button>
           </div>
           {/* <input
@@ -141,7 +141,7 @@ function CreateBookModal(props) {
           </select> */}
           {/* </div> */}
         </form>
-        <div className='results'>{books}</div>
+        <div className="results">{books}</div>
       </div>
     </Modal>
   );

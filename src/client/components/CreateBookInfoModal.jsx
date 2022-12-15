@@ -32,7 +32,7 @@ function CreateBookInfoModal(props) {
       genre_name: genre,
       user_id: props.userData.user_id,
     };
-    console.log(body);
+    // console.log(body);
 
     const options = {
       method: 'POST',
