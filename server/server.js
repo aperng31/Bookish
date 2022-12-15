@@ -89,7 +89,7 @@ app.post('/books', bookController.findBook, (req, res) => {
 app.delete(
   '/books',
   bookController.deleteBook,
-  bookController.getUserBooks,
+  // bookController.getUserBooks,
   (req, res) => {
     console.log('this is delete')
     res.status(200).send(res.locals.userBooks)
