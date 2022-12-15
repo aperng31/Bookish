@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 function BookCard(props) {
   console.log('props in BookCard', props);
@@ -6,33 +6,30 @@ function BookCard(props) {
   const [regularDisplayState, toggleDisplay] = React.useState('block');
   const [updateDisplayState, toggleUpdate] = React.useState('none');
 
-  const [newUpdatedAuthor, newAuthor] = React.useState(
-    props.props.props.bookData.author
+  const [readBook, setReadBook] = React.useState(
+    props.props.props.bookData.read
   );
-  const [newUpdatedTitle, newTitle] = React.useState(
-    props.props.props.bookData.name
-  );
-  const [newUpdatedGenre, newGenre] = React.useState(
-    props.props.props.bookData.genre_name
-  );
+  const [deletedBook, setDeletedBook] = React.useState(false);
 
-  function toggleUpdateDisplay() {
-    //render update input
-    if (regularDisplayState === 'block') {
-      toggleDisplay('none');
-      toggleUpdate('block');
-    } else {
-      //if 'cancel' is clicked
-      newAuthor(props.props.props.bookData.author); //reset default values to original bookData
-      newTitle(props.props.props.bookData.name);
-      newGenre(props.props.props.bookData.genre_name);
-      toggleDisplay('block');
-      toggleUpdate('none');
-    }
-  }
+  useEffect(() => {
+    const body = {
+      user_id: props.props.props.bookData.user_id,
+      book_id: props.props.props.bookData.book_id,
+      read: readBook,
+    };
+    const options = {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'Application/JSON' },
+      body: JSON.stringify(body),
+    };
+    fetch('/books', options)
+      .then((res) => res.json())
+      .then((res) => {
+        props.setBooks(res);
+      });
+  }, [readBook]);
 
-  function deleteBook() {
-    // console.log(props);
+  useEffect(() => {
     const body = {
       user_id: props.props.props.bookData.user_id,
       book_id: props.props.props.bookData.book_id,
@@ -46,11 +43,20 @@ function BookCard(props) {
     fetch('/books', options)
       .then((res) => res.json())
       .then((res) => {
-        // console.log(res);
+        console.log(res);
         props.setBooks(res);
         //close modal, redirect to home page to re-fetch data
       });
-  }
+  }, [deletedBook]);
+
+  const deleteBook = () => {
+    setDeletedBook(true);
+  };
+
+  const updateBook = () => {
+    setReadBook(true);
+  };
+
   return (
     <div className="book-card book">
       <button className="closeBtn" onClick={() => props.props.setIsOpen(false)}>
@@ -76,28 +82,9 @@ function BookCard(props) {
           <span style={{ display: regularDisplayState }}>
             {props.props.props.bookData.author}
           </span>
-          <input
-            type="text"
-            defaultValue={props.props.props.bookData.author}
-            style={{ display: updateDisplayState }}
-            onChange={(e) => newAuthor(e.target.value)}
-          ></input>
         </span>
       </h4>
-      {/* <button onClick={() => props.moreInfo(props.book_id) }>More Info</button> */}
-
-      <button
-        onClick={() => toggleUpdateDisplay()}
-        style={{ display: updateDisplayState }}
-      >
-        Cancel
-      </button>
-      <button
-        onClick={() => updateBookReq()}
-        style={{ display: updateDisplayState }}
-      >
-        Update Book
-      </button>
+      <button onClick={() => updateBook()}>Read</button>
 
       <button onClick={() => deleteBook()}>Delete Book</button>
     </div>
