@@ -21,13 +21,9 @@ function BookCard(props) {
       body: JSON.stringify(body),
     };
     console.log(body);
-    fetch('/books', options)
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        props.setBooks(res);
-        //close modal, redirect to home page to re-fetch data
-      });
+    fetch('/books', options).then((res) => {
+      console.log('deleted book!');
+    });
   };
 
   const updateBook = () => {
