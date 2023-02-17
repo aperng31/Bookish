@@ -17,6 +17,11 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 
 //USERS
 //input (req.body) --> username and passsword
+const corsOptions = {
+  origin: 'http://localhost:8080',
+  credentials: true,
+  optionSuccessStatus: 200,
+};
 app.use(cors());
 
 app.post(

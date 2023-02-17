@@ -38,26 +38,6 @@ function CreateBookModal(props) {
   const [genre, newGenre] = React.useState('');
   const [books, setBooks] = React.useState([]);
 
-  // function createBookReq() {
-  //   // const body = { author, name: title, genre_name: genre, user_id: props.userData.user_id };
-  //   const body = { author, name: title, genre_name: genre };
-  //   // console.log(body);
-
-  //   const options = {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'Application/JSON' },
-  //     body: JSON.stringify(body),
-  //   };
-  //   fetch('/books', options)
-  //     .then((res) => res.json())
-  //     .then((res) => {
-  //       console.log('createbook res', res);
-  //       props.setBooks(res);
-  //       props.closeModal();
-  //       //close modal, redirect to home page (which re-fetchs?)
-  //     })
-  //     .catch((err) => {});
-  // }
   function bookSearch(e) {
     // e.preventDefault needs to be invoked
     e.preventDefault();
